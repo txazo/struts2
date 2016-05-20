@@ -31,6 +31,8 @@ import org.apache.struts2.dispatcher.HostConfig;
 /**
  * Host configuration that wraps FilterConfig
  */
+
+// 源码解析: 封装FilterConfig
 public class FilterHostConfig implements HostConfig {
 
     private FilterConfig config;

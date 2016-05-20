@@ -43,6 +43,8 @@ public class MakeIterator {
      * @return <code>true</code> if the object can be converted to an iterator and
      *         <code>false</code> otherwise
      */
+
+    // 源码解析: 对象是否可以被转换为Iterator
     public static boolean isIterable(Object object) {
         if (object == null) {
             return false;
@@ -63,6 +65,7 @@ public class MakeIterator {
         }
     }
 
+    // 源码解析: 对象转换为Iterator
     public static Iterator convert(Object value) {
         Iterator iterator;
 

@@ -38,6 +38,7 @@ public abstract class IteratorFilterSupport {
 
 
     // Wrapper for enumerations
+    // 源码解析: Enumeration转换为Iterator
     public static class EnumerationIterator implements Iterator {
         Enumeration enumeration;
 
