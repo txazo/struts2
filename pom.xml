@@ -11,11 +11,6 @@
     <name>struts2</name>
     <url>https://github.com/txazo/struts2</url>
 
-    <properties>
-        <tlib.version>2.3</tlib.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.struts</groupId>
@@ -124,15 +119,6 @@
                     <source>1.7</source>
                     <target>1.7</target>
                     <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <configuration>
-                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
         </plugins>
