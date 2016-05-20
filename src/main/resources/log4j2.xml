@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} [%c] LOG4J2 %-5level - %msg%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="error"/>
+
+        <Logger name="org.apache.struts2" level="debug">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="com.opensymphony.xwork2" level="debug">
+            <AppenderRef ref="Console"/>
+        </Logger>
+    </Loggers>
+
+</Configuration>
