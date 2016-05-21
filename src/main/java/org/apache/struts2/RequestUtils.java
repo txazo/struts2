@@ -91,6 +91,8 @@ public class RequestUtils {
      * @param request The request
      * @return The uri
      */
+
+    // 源码解析: 获取请求的URI
     public static String getUri(HttpServletRequest request) {
         // handle http dispatcher includes.
         String uri = (String) request.getAttribute("javax.servlet.include.servlet_path");

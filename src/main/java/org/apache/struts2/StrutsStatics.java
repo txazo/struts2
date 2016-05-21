@@ -40,6 +40,8 @@ package org.apache.struts2;
  * HttpServletRequest request = (HttpServletRequest)context.get(HTTP_REQUEST);</code>
  * </p>
  */
+
+// 源码解析: Struts的常量, 作为ActionContext中key-value对的key
 public interface StrutsStatics {
 
     /**

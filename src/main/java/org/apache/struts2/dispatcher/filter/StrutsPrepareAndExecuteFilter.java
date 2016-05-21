@@ -46,12 +46,16 @@ import java.util.regex.Pattern;
  * Handles both the preparation and execution phases of the Struts dispatching process.  This filter is better to use
  * when you don't have another filter that needs access to action context information, such as Sitemesh.
  */
+
+// 源码解析: Struts2核心过滤器
 public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
 
     private static final Logger LOG = LogManager.getLogger(StrutsPrepareAndExecuteFilter.class);
 
     protected PrepareOperations prepare;
     protected ExecuteOperations execute;
+
+    // 源码解析: 过滤的请求
     protected List<Pattern> excludedPatterns = null;
 
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -59,7 +63,11 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
         Dispatcher dispatcher = null;
         try {
             FilterHostConfig config = new FilterHostConfig(filterConfig);
+
+            // 源码解析: 初始化日志(Struts2实现的日志), 2.5版本之后弃用, 改用Log4j 2日志
             init.initLogging(config);
+
+            // 源码解析: 初始化Dispatcher
             dispatcher = init.initDispatcher(config);
             init.initStaticContentLoader(config, dispatcher);
 
@@ -92,11 +100,22 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
 
         try {
             String uri = RequestUtils.getUri(request);
+
+            // 源码解析: 判断是否过滤的请求
             if (excludedPatterns != null && prepare.isUrlExcluded(request, excludedPatterns)) {
                 LOG.trace("Request {} is excluded from handling by Struts, passing request to other filters", uri);
                 chain.doFilter(request, response);
             } else {
                 LOG.trace("Checking if {} is a static resource", uri);
+
+                /**
+                 * 源码解析: 静态资源
+                 *
+                 * static/
+                 * template/
+                 * org/apache/struts2/static/
+                 * org/apache/struts2/interceptor/debugging/
+                 */
                 boolean handled = execute.executeStaticResourceRequest(request, response);
                 if (!handled) {
                     LOG.trace("Assuming uri {} as a normal action", uri);

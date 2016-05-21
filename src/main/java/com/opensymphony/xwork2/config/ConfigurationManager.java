@@ -36,6 +36,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author tm_jee
  * @version $Date$ $Id$
  */
+
+// 源码解析: XWork的配置管理
 public class ConfigurationManager {
 
     protected static final Logger LOG = LogManager.getLogger(ConfigurationManager.class);

@@ -8,6 +8,8 @@ import java.util.Collection;
 /**
  * Basic interface to access file on the File System and to monitor changes
  */
+
+// 源码解析: 文件系统的访问和监控改变的接口
 public interface FileManager {
 
     /**

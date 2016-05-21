@@ -460,6 +460,8 @@ public class Dispatcher {
      * Load configurations, including both XML and zero-configuration strategies,
      * and update optional settings, including whether to reload configurations and resource files.
      */
+
+    // 源码解析: 加载配置, 包括XML配置和零配置
     public void init() {
 
     	if (configurationManager == null) {
@@ -467,12 +469,23 @@ public class Dispatcher {
     	}
 
         try {
+            // 源码解析: 初始化FileManager
             init_FileManager();
+
+            // 源码解析: 加载配置文件org/apache/struts2/default.properties
             init_DefaultProperties(); // [1]
+
+            // 源码解析: 加载配置文件struts-default.xml,struts-plugin.xml,struts.xml
             init_TraditionalXmlConfigurations(); // [2]
+
+            // 源码解析: 加载配置文件stuts.properties
             init_LegacyStrutsProperties(); // [3]
             init_CustomConfigurationProviders(); // [5]
+
+            // 源码解析: Filter的init-param
             init_FilterInitParameters() ; // [6]
+
+            // 源码解析: 初始化对象别名
             init_AliasStandardObjects() ; // [7]
 
             Container container = init_PreloadConfiguration();
