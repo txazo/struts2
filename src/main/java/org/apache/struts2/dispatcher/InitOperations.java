@@ -71,6 +71,7 @@ public class InitOperations {
      * @return the dispatcher
      */
     public Dispatcher initDispatcher( HostConfig filterConfig ) {
+        // 源码解析: 创建Dispatcher
         Dispatcher dispatcher = createDispatcher(filterConfig);
 
         // 源码解析: Dispatcher初始化

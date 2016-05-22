@@ -119,7 +119,11 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
                 boolean handled = execute.executeStaticResourceRequest(request, response);
                 if (!handled) {
                     LOG.trace("Assuming uri {} as a normal action", uri);
+
+                    // 源码解析: 设置Response的编码和时区
                     prepare.setEncodingAndLocale(request, response);
+
+                    // 源码解析: 创建ActionContext
                     prepare.createActionContext(request, response);
                     prepare.assignDispatcherToThread();
                     request = prepare.wrapRequest(request);
