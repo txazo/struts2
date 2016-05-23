@@ -67,7 +67,7 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
             // 源码解析: 初始化日志(Struts2实现的日志), 2.5版本之后弃用, 改用Log4j 2日志
             init.initLogging(config);
 
-            // 源码解析: 初始化Dispatcher
+            // 源码解析: 创建并初始化Dispatcher
             dispatcher = init.initDispatcher(config);
             init.initStaticContentLoader(config, dispatcher);
 

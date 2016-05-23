@@ -119,6 +119,8 @@ public class InitOperations {
             String value = filterConfig.getInitParameter(name);
             params.put(name, value);
         }
+
+        // 源码解析: 创建Dispatcher, 传入ServletContext和初始化参数
         return new Dispatcher(filterConfig.getServletContext(), params);
     }
 
