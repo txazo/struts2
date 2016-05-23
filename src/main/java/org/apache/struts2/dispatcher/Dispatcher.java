@@ -481,21 +481,28 @@ public class Dispatcher {
             // 源码解析: 加载配置文件org/apache/struts2/default.properties
             init_DefaultProperties(); // [1]
 
-            // 源码解析: 加载配置文件struts-default.xml,struts-plugin.xml,struts.xml
+            // 源码解析: 加载配置文件struts-default.xml、struts-plugin.xml、struts.xml
             init_TraditionalXmlConfigurations(); // [2]
 
-            // 源码解析: 加载配置文件stuts.properties
+            // 源码解析: 加载Properties文件stuts.properties、struts.custom.properties
             init_LegacyStrutsProperties(); // [3]
+
+            // 源码解析: 初始化自定义的ConfigurationProvider
             init_CustomConfigurationProviders(); // [5]
 
-            // 源码解析: Filter的init-param
+            // 源码解析: 初始化Filter的init-param参数
             init_FilterInitParameters() ; // [6]
 
             // 源码解析: 初始化对象别名
             init_AliasStandardObjects() ; // [7]
 
+            // 源码解析: 预加载配置
             Container container = init_PreloadConfiguration();
+
+            // 源码解析: 依赖注入Dispatcher
             container.inject(this);
+
+            // 源码解析: 检查WebLogic
             init_CheckWebLogicWorkaround(container);
 
             if (!dispatcherListeners.isEmpty()) {
@@ -905,6 +912,8 @@ public class Dispatcher {
      * Expose the dependency injection container.
      * @return Our dependency injection container
      */
+
+    // 源码解析: 获取依赖注入容器
     public Container getContainer() {
         if (ContainerHolder.get() != null) {
             return ContainerHolder.get();

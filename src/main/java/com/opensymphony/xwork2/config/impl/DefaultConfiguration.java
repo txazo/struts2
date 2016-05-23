@@ -155,11 +155,16 @@ public class DefaultConfiguration implements Configuration {
 
         ContainerProperties props = new ContainerProperties();
         ContainerBuilder builder = new ContainerBuilder();
+
+        // 源码解析: 创建启动容器
         Container bootstrap = createBootstrapContainer(providers);
         for (final ContainerProvider containerProvider : providers)
         {
+            // 源码解析: ContainerProvider依赖注入
             bootstrap.inject(containerProvider);
+            // 源码解析: ContainerProvider初始化
             containerProvider.init(this);
+            // 源码解析: 注册容器的Bean和Propertie
             containerProvider.register(builder, props);
         }
         props.setConstants(builder);
@@ -217,6 +222,7 @@ public class DefaultConfiguration implements Configuration {
         return context;
     }
 
+    // 源码解析: 创建启动容器
     protected Container createBootstrapContainer(List<ContainerProvider> providers) {
         ContainerBuilder builder = new ContainerBuilder();
         boolean fmFactoryRegistered = false;

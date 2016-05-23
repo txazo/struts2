@@ -29,10 +29,15 @@ import java.util.LinkedHashMap;
  *
  * @author crazybob@google.com (Bob Lee)
  */
+
+// 源码解析: Context实现
 class ExternalContext<T> implements Context {
 
+    // 源码解析: 注入目标(Constructor、Method、Field)
     final Member member;
+    // 源码解析: 注入对象的key
     final Key<T> key;
+    // 源码解析: 注入上下文的容器
     final ContainerImpl container;
 
     public ExternalContext(Member member, Key<T> key, ContainerImpl container) {

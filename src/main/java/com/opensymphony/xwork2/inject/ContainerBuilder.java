@@ -38,6 +38,8 @@ import java.util.logging.Logger;
  *
  * @author crazybob@google.com (Bob Lee)
  */
+
+// 源码解析:
 public final class ContainerBuilder {
 
     final Map<Key<?>, InternalFactory<?>> factories = new HashMap<>();

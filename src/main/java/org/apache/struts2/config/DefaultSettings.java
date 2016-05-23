@@ -58,7 +58,7 @@ public class DefaultSettings implements Settings {
 
         ArrayList<Settings> list = new ArrayList<>();
 
-        // stuts.properties, default.properties
+        // struts.properties, default.properties
         try {
             list.add(new PropertiesSettings("struts"));
         } catch (Exception e) {

@@ -23,6 +23,8 @@ import java.lang.reflect.Member;
  *
  * @author crazybob@google.com (Bob Lee)
  */
+
+// 源码解析: 注入上下文
 public interface Context {
 
   /**

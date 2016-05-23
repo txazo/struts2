@@ -68,6 +68,10 @@ import java.util.Set;
  * @see ContainerBuilder
  * @author crazybob@google.com (Bob Lee)
  */
+
+/**
+ * 源码解析: 容器, 注入依赖到Constructor、Method、Field
+ */
 public interface Container extends Serializable {
 
   /**

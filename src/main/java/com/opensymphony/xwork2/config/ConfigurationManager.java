@@ -66,6 +66,7 @@ public class ConfigurationManager {
         if (configuration == null) {
             setConfiguration(createConfiguration(defaultFrameworkBeanName));
             try {
+                // 源码解析: 重新加载容器
                 configuration.reloadContainer(getContainerProviders());
             } catch (ConfigurationException e) {
                 setConfiguration(null);

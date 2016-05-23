@@ -25,6 +25,8 @@ package com.opensymphony.xwork2.inject;
  *
  * @author crazybob@google.com (Bob Lee)
  */
+
+// 源码解析: key, 由type和name唯一标识
 class Key<T> {
 
     final Class<T> type;

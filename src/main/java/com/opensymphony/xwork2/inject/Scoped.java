@@ -26,6 +26,8 @@ import java.lang.annotation.Target;
  *
  * @author crazybob
  */
+
+// 源码解析: Scope作用域的注解
 @Target(ElementType.TYPE)
 @Retention(RUNTIME)
 public @interface Scoped {

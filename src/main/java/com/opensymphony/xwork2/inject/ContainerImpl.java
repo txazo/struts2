@@ -35,6 +35,8 @@ import java.util.Map.Entry;
  * @author crazybob@google.com (Bob Lee)
  * @see ContainerBuilder
  */
+
+// 源码解析: 容器Container的默认实现
 class ContainerImpl implements Container {
 
     final Map<Key<?>, InternalFactory<?>> factories;

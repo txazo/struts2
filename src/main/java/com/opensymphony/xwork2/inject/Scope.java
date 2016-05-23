@@ -24,6 +24,17 @@ import java.util.concurrent.Callable;
  *
  * @author crazybob
  */
+
+/**
+ * 源码解析: 注入对象的作用域
+ *
+ * Scope.PROTOTYPE: 原型
+ * Scope.SINGLETON: 单例
+ * Scope.THREAD: 线程作用域
+ * Scope.REQUEST: Request作用域
+ * Scope.SESSION: Session作用域
+ * Scope.WIZARD:
+ */
 public enum Scope {
 
     /**

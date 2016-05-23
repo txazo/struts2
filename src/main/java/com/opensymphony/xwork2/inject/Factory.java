@@ -21,6 +21,8 @@ package com.opensymphony.xwork2.inject;
  *
  * @author crazybob@google.com (Bob Lee)
  */
+
+// 源码解析: 创建注入对象的工厂
 public interface Factory<T> {
 
   /**

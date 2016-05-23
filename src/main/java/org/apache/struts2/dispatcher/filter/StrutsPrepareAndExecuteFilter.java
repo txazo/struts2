@@ -69,17 +69,24 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
 
             // 源码解析: 创建并初始化Dispatcher
             dispatcher = init.initDispatcher(config);
+
+            // 源码解析: 初始化静态资源加载器
             init.initStaticContentLoader(config, dispatcher);
 
             prepare = new PrepareOperations(dispatcher);
             execute = new ExecuteOperations(dispatcher);
+
+            // 源码解析: 初始化过滤的请求
             this.excludedPatterns = init.buildExcludedPatternsList(dispatcher);
 
+            // 源码解析: 初始化回调, 空方法
             postInit(dispatcher, filterConfig);
         } finally {
             if (dispatcher != null) {
+                // 源码解析: Dispatcher初始化后clean, ContainerHolder.instance.remove()
                 dispatcher.cleanUpAfterInit();
             }
+            // 源码解析: ActionContext.actionContext.set(null)
             init.cleanup();
         }
     }
