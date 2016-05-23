@@ -28,6 +28,8 @@ import java.util.List;
 /**
  * A simple immutable and serializable implementation of {@link Location}.
  */
+
+// 源码解析: Location接口的实现
 public class LocationImpl implements Location, Serializable {
 
     private final String uri;

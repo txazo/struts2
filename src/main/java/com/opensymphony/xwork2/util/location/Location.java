@@ -24,6 +24,8 @@ import java.util.List;
  * <p>
  * Locations are mostly provided by {@link Locatable}s objects.
  */
+
+// 源码解析: 资源的位置, 包括URI、行号、列号、描述
 public interface Location {
     
     /**

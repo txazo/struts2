@@ -461,15 +461,21 @@ public class Dispatcher {
      * and update optional settings, including whether to reload configurations and resource files.
      */
 
-    // 源码解析: 加载配置, 包括XML配置和零配置
+    /**
+     *  源码解析
+     *
+     * 加载配置, 包括XML配置和零配置
+     * 更新可选设置, 包括是否重新加载配置和资源文件
+     */
     public void init() {
 
     	if (configurationManager == null) {
+            // 源码解析: 创建配置管理器ConfigurationManager
     		configurationManager = createConfigurationManager(DefaultBeanSelectionProvider.DEFAULT_BEAN_NAME);
     	}
 
         try {
-            // 源码解析: 初始化FileManager
+            // 源码解析: 初始化文件管理器FileManager
             init_FileManager();
 
             // 源码解析: 加载配置文件org/apache/struts2/default.properties

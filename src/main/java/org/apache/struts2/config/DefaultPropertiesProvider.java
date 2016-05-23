@@ -29,6 +29,8 @@ import com.opensymphony.xwork2.util.location.LocatableProperties;
 /**
  * Loads the default properties, separate from the usual struts.properties loading
  */
+
+// 源码解析: 加载org/apache/struts2/default.properties
 public class DefaultPropertiesProvider extends PropertiesConfigurationProvider {
 
     public void destroy() {

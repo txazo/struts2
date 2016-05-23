@@ -16,6 +16,8 @@ import java.util.Properties;
  * loaded, a custom properties file parser is used to remember both the line number
  * and preceeding comments for each property entry.
  */
+
+// 源码解析: 可以记住每个属性位置的Properties实现
 public class LocatableProperties extends Properties implements Locatable {
 
     Location location;

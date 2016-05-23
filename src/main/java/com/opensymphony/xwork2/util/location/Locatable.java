@@ -19,6 +19,8 @@ package com.opensymphony.xwork2.util.location;
  * A interface that should be implemented by objects knowning their location (i.e. where they
  * have been created from).
  */
+
+// 源码解析:
 public interface Locatable {
     /**
      * Get the location of this object

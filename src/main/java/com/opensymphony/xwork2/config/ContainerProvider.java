@@ -24,6 +24,8 @@ import com.opensymphony.xwork2.util.location.LocatableProperties;
  * 
  * @since 2.1
  */
+
+// 源码解析: 为容器Container提供bean、常量、属性
 public interface ContainerProvider {
 
     /**
