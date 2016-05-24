@@ -5,6 +5,7 @@ Apache Struts2 Framework Source Code Analysis
 ## 说明
 
 * Struts2版本: 2.5
+* OGNL版本: 3.1.4
 * 日志: Log4j 2
 * 日志配置文件: [/src/main/resources/log4j2.xml](/src/main/resources/log4j2.xml)
 * Struts2配置文件: [/src/main/resources/struts.xml](/src/main/resources/struts.xml)
