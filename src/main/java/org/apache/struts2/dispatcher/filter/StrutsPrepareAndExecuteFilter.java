@@ -62,6 +62,7 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
         InitOperations init = new InitOperations();
         Dispatcher dispatcher = null;
         try {
+            // 源码解析: 封装FilterConfig
             FilterHostConfig config = new FilterHostConfig(filterConfig);
 
             // 源码解析: 初始化日志(Struts2实现的日志), 2.5版本之后弃用, 改用Log4j 2日志
@@ -133,27 +134,29 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
                 if (!handled) {
                     LOG.trace("Assuming uri {} as a normal action", uri);
 
-                    // 源码解析: 设置Response的编码和时区
+                    // 源码解析: 设置Response的编码和国际化
                     prepare.setEncodingAndLocale(request, response);
 
-                    // 源码解析: 创建ActionContext
+                    // 源码解析: 创建action上下文
                     prepare.createActionContext(request, response);
 
                     // 源码解析: 分配Dispatcher到Dispatcher ThreadLocal
                     prepare.assignDispatcherToThread();
 
-                    // 源码解析: 封装Request
+                    // 源码解析: 封装请求Request
                     request = prepare.wrapRequest(request);
 
                     // 源码解析: 查找ActionMapping
                     ActionMapping mapping = prepare.findActionMapping(request, response, true);
                     if (mapping == null) {
                         LOG.trace("Cannot find mapping for {}, passing to other filters", uri);
+
+                        // 源码解析: action映射不存在, 调用下一个过滤链
                         chain.doFilter(request, response);
                     } else {
                         LOG.trace("Found mapping {} for {}", mapping, uri);
 
-                        // 源码解析: 执行Action
+                        // 源码解析: 执行action
                         execute.executeAction(request, response, mapping);
                     }
                 }

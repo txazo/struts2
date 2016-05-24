@@ -263,7 +263,7 @@ public class DefaultActionMapper implements ActionMapper {
 
         // 源码解析: 从uri中解析出name和namespace
         parseNameAndNamespace(uri, mapping, configManager);
-        // 源码解析: 处理特殊参数
+        // 源码解析: 处理特殊的请求参数
         handleSpecialParameters(request, mapping);
         return parseActionName(mapping);
     }
@@ -272,6 +272,7 @@ public class DefaultActionMapper implements ActionMapper {
         if (mapping.getName() == null) {
             return null;
         }
+        // 源码解析: 动态方法调用的处理, 分离action名和方法名
         if (allowDynamicMethodCalls) {
             // handle "name!method" convention.
             String name = mapping.getName();

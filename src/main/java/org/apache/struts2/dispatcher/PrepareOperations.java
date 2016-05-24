@@ -188,6 +188,7 @@ public class PrepareOperations {
         ActionMapping mapping = (ActionMapping) request.getAttribute(STRUTS_ACTION_MAPPING_KEY);
         if (mapping == null || forceLookup) {
             try {
+                // 源码解析: 创建ActionMapping实例
                 mapping = dispatcher.getContainer().getInstance(ActionMapper.class).getMapping(request, dispatcher.getConfigurationManager());
                 if (mapping != null) {
                     request.setAttribute(STRUTS_ACTION_MAPPING_KEY, mapping);

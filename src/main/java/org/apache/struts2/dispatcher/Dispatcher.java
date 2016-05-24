@@ -490,7 +490,7 @@ public class Dispatcher {
             // 源码解析: 初始化自定义的ConfigurationProvider
             init_CustomConfigurationProviders(); // [5]
 
-            // 源码解析: 初始化Filter的init-param参数
+            // 源码解析: 初始化Filter的初始化参数
             init_FilterInitParameters() ; // [6]
 
             // 源码解析: 初始化对象别名
@@ -549,7 +549,7 @@ public class Dispatcher {
     public void serviceAction(HttpServletRequest request, HttpServletResponse response, ActionMapping mapping)
             throws ServletException {
 
-        // 源码解析: 创建ContextMap, 包装请求参数
+        // 源码解析: 封装上下文环境, 包装请求参数
         Map<String, Object> extraContext = createContextMap(request, response, mapping);
 
         // If there was a previous value stack, then create a new copy and pass it in to be used by the new Action
@@ -839,6 +839,8 @@ public class Dispatcher {
         }
 
         String content_type = request.getContentType();
+
+        // 源码解析: 请求得ContentType为multipart/form-data类型, 用MultiPartRequestWrapper封装, 否则用StrutsRequestWrapper封装
         if (content_type != null && content_type.contains("multipart/form-data")) {
             MultiPartRequest mpr = getMultiPartRequest();
             LocaleProvider provider = getContainer().getInstance(LocaleProvider.class);
