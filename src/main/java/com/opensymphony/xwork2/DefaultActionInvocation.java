@@ -45,17 +45,24 @@ import java.util.Map;
  * @version $Date$ $Id$
  * @see com.opensymphony.xwork2.DefaultActionProxy
  */
+
+// 源码解析: ActionInvocation的默认实现
 public class DefaultActionInvocation implements ActionInvocation {
 
     private static final Logger LOG = LogManager.getLogger(DefaultActionInvocation.class);
 
+    // Action实例
     protected Object action;
+    // Action代理
     protected ActionProxy proxy;
     protected List<PreResultListener> preResultListeners;
     protected Map<String, Object> extraContext;
     protected ActionContext invocationContext;
+    // 拦截器
     protected Iterator<InterceptorMapping> interceptors;
+    // 值栈
     protected ValueStack stack;
+    // 结果
     protected Result result;
     protected Result explicitResult;
     protected String resultCode;
@@ -237,11 +244,13 @@ public class DefaultActionInvocation implements ActionInvocation {
                 String interceptorMsg = "interceptor: " + interceptor.getName();
                 UtilTimerStack.push(interceptorMsg);
                 try {
+                    // 源码解析: 执行拦截器
                     resultCode = interceptor.getInterceptor().intercept(DefaultActionInvocation.this);
                 } finally {
                     UtilTimerStack.pop(interceptorMsg);
                 }
             } else {
+                // 源码解析: 调用Action
                 resultCode = invokeActionOnly();
             }
 
@@ -289,6 +298,8 @@ public class DefaultActionInvocation implements ActionInvocation {
         String timerKey = "actionCreate: " + proxy.getActionName();
         try {
             UtilTimerStack.push(timerKey);
+
+            // 源码解析: 创建Action实例
             action = objectFactory.buildAction(proxy.getActionName(), proxy.getNamespace(), proxy.getConfig(), contextMap);
         } catch (InstantiationException e) {
             throw new XWorkException("Unable to instantiate Action!", e, proxy.getConfig());
@@ -389,6 +400,7 @@ public class DefaultActionInvocation implements ActionInvocation {
             actionContext.setActionInvocation(this);
         }
 
+        // 源码解析: 创建Action实例
         createAction(contextMap);
 
         if (pushAction) {
@@ -399,6 +411,7 @@ public class DefaultActionInvocation implements ActionInvocation {
         invocationContext = new ActionContext(contextMap);
         invocationContext.setName(proxy.getActionName());
 
+        // 源码解析: 创建过滤器
         createInterceptors(proxy);
     }
 
@@ -443,6 +456,8 @@ public class DefaultActionInvocation implements ActionInvocation {
                     throw e;
                 }
             }
+
+            // 源码解析: 保存Action执行结果
             return saveResult(actionConfig, methodResult);
         } catch (NoSuchPropertyException e) {
             throw new IllegalArgumentException("The " + methodName + "() is not defined in action " + getAction().getClass() + "");

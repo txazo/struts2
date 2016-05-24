@@ -134,6 +134,7 @@ public class ObjectFactory implements Serializable {
      * @throws Exception in case of any error
      */
     public Object buildAction(String actionName, String namespace, ActionConfig config, Map<String, Object> extraContext) throws Exception {
+        // 源码解析: 通过ActionFactory创建Action实例
         return actionFactory.buildAction(actionName, namespace, config, extraContext);
     }
 

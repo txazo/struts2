@@ -261,7 +261,9 @@ public class DefaultActionMapper implements ActionMapper {
             return null;
         }
 
+        // 源码解析: 从uri中解析出name和namespace
         parseNameAndNamespace(uri, mapping, configManager);
+        // 源码解析: 处理特殊参数
         handleSpecialParameters(request, mapping);
         return parseActionName(mapping);
     }

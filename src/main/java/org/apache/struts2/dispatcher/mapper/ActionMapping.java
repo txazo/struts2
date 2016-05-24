@@ -32,6 +32,8 @@ import java.util.Map;
  * it <b>must</b> be a mutable map, such as a HashMap.
  *
  */
+
+// 源码解析: Action映射, 用于通过反射执行Action, name和namespace是必须的
 public class ActionMapping {
 
     private String name;

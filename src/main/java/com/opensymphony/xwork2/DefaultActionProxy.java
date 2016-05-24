@@ -43,6 +43,8 @@ import java.util.Locale;
  * @author tmjee
  * @since 2005-8-6
  */
+
+// 源码解析: ActionProxy的默认实现
 public class DefaultActionProxy implements ActionProxy, Serializable {
 
     private static final long serialVersionUID = 3293074152487468527L;
@@ -50,11 +52,16 @@ public class DefaultActionProxy implements ActionProxy, Serializable {
     private static final Logger LOG = LogManager.getLogger(DefaultActionProxy.class);
 
     protected Configuration configuration;
+    // ActionConfig
     protected ActionConfig config;
+    // ActionInvocation
     protected ActionInvocation invocation;
     protected UnknownHandlerManager unknownHandlerManager;
+    // action名
     protected String actionName;
+    // action命名空间
     protected String namespace;
+    // action方法
     protected String method;
     protected boolean executeResult;
     protected boolean cleanupContext;
@@ -183,6 +190,8 @@ public class DefaultActionProxy implements ActionProxy, Serializable {
         String profileKey = "create DefaultActionProxy: ";
         try {
             UtilTimerStack.push(profileKey);
+
+            // 源码解析: 查找ActionConfig
             config = configuration.getRuntimeConfiguration().getActionConfig(namespace, actionName);
 
             if (config == null && unknownHandlerManager.hasUnknownHandlers()) {
@@ -195,6 +204,8 @@ public class DefaultActionProxy implements ActionProxy, Serializable {
             resolveMethod();
 
             if (config.isAllowedMethod(method)) {
+
+                // 源码解析: ActionInvocation初始化
                 invocation.init(this);
             } else {
                 throw new ConfigurationException("This method: " + method + " for action " + actionName + " is not allowed!");

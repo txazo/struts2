@@ -52,9 +52,14 @@ public class DefaultActionProxyFactory implements ActionProxyFactory {
     }
 
     public ActionProxy createActionProxy(String namespace, String actionName, String methodName, Map<String, Object> extraContext, boolean executeResult, boolean cleanupContext) {
-        
+
+        // 源码解析: 创建ActionInvocation
         ActionInvocation inv = createActionInvocation(extraContext, true);
+
+        // 源码解析: ActionInvocation依赖注入
         container.inject(inv);
+
+        // 源码解析: 创建ActionProxy并返回
         return createActionProxy(inv, namespace, actionName, methodName, executeResult, cleanupContext);
     }
     
@@ -70,7 +75,15 @@ public class DefaultActionProxyFactory implements ActionProxyFactory {
     public ActionProxy createActionProxy(ActionInvocation inv, String namespace, String actionName, String methodName, boolean executeResult, boolean cleanupContext) {
 
         DefaultActionProxy proxy = new DefaultActionProxy(inv, namespace, actionName, methodName, executeResult, cleanupContext);
+
+        // 源码解析: DefaultActionProxy依赖注入
         container.inject(proxy);
+
+        /**
+         * 源码解析: ActionProxy的准备操作
+         *
+         * 1) 根据namespace和actionName从Configuration中查找ActionConfig
+         */
         proxy.prepare();
         return proxy;
     }

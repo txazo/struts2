@@ -27,6 +27,8 @@ import com.opensymphony.xwork2.config.entities.ActionConfig;
  * 
  * @author Jason Carreira
  */
+
+// 源码解析: Action代理
 public interface ActionProxy {
 
     /**

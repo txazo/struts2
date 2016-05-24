@@ -39,19 +39,29 @@ import java.util.*;
  * @author Rainer Hermanns
  * @version $Revision$
  */
+
+// 源码解析: Action配置, 包含Action的配置和执行信息
 public class ActionConfig extends Located implements Serializable {
 
     public static final String DEFAULT_METHOD = "execute";
     public static final String WILDCARD = "*";
     public static final String DEFAULT_METHOD_REGEX = "([A-Za-z0-9_$]*)";
 
+    // 拦截器
     protected List<InterceptorMapping> interceptors; // a list of interceptorMapping Objects eg. List<InterceptorMapping>
+    // 参数
     protected Map<String,String> params;
+    // 结果配置
     protected Map<String, ResultConfig> results;
+    // 异常映射
     protected List<ExceptionMappingConfig> exceptionMappings;
+    // 类名
     protected String className;
+    // 方法名
     protected String methodName;
+    // 包名
     protected String packageName;
+    // action名
     protected String name;
     protected boolean strictMethodInvocation = true;
     protected AllowedMethods allowedMethods;

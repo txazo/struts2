@@ -29,6 +29,12 @@ import java.io.Serializable;
  * @author Jason Carreira
  * @see com.opensymphony.xwork2.ActionProxy
  */
+
+/**
+ * 源码解析: Action调用, 代表Action的执行状态, 持有过滤器和Action实例
+ *
+ * 通过反复的可重入的执行invoke()方法, 执行顺序为ActionProxy -> Interceptors -> Action -> Result
+ */
 public interface ActionInvocation extends Serializable {
 
     /**

@@ -116,12 +116,18 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
                 LOG.trace("Checking if {} is a static resource", uri);
 
                 /**
-                 * 源码解析: 静态资源
+                 * 源码解析: 检查是否静态资源请求, 请求以/struts/或/static/开头, 静态资源在classpath以下目录
                  *
                  * static/
                  * template/
                  * org/apache/struts2/static/
                  * org/apache/struts2/interceptor/debugging/
+                 *
+                 * 例如
+                 * /struts/struts2.properties, static/目录
+                 * /struts/utils.js, template/目录
+                 * /struts/simple/a.ftl, org/apache/struts2/static/目录
+                 * /struts/webconsole.js, org/apache/struts2/interceptor/debugging/目录
                  */
                 boolean handled = execute.executeStaticResourceRequest(request, response);
                 if (!handled) {
@@ -132,14 +138,22 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
 
                     // 源码解析: 创建ActionContext
                     prepare.createActionContext(request, response);
+
+                    // 源码解析: 分配Dispatcher到Dispatcher ThreadLocal
                     prepare.assignDispatcherToThread();
+
+                    // 源码解析: 封装Request
                     request = prepare.wrapRequest(request);
+
+                    // 源码解析: 查找ActionMapping
                     ActionMapping mapping = prepare.findActionMapping(request, response, true);
                     if (mapping == null) {
                         LOG.trace("Cannot find mapping for {}, passing to other filters", uri);
                         chain.doFilter(request, response);
                     } else {
                         LOG.trace("Found mapping {} for {}", mapping, uri);
+
+                        // 源码解析: 执行Action
                         execute.executeAction(request, response, mapping);
                     }
                 }

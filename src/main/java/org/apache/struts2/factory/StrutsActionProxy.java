@@ -51,6 +51,7 @@ public class StrutsActionProxy extends DefaultActionProxy {
 //                }
 //            });
 
+            // 源码解析: ActionInvocation调用
             return invocation.invoke();
         } finally {
             if (cleanupContext)

@@ -83,6 +83,7 @@ public class PrepareOperations {
             // detected existing context, so we are probably in a forward
             ctx = new ActionContext(new HashMap<>(oldContext.getContextMap()));
         } else {
+            // 源码解析: 创建Ognl值栈
             ValueStack stack = dispatcher.getContainer().getInstance(ValueStackFactory.class).createValueStack();
             stack.getContext().putAll(dispatcher.createContextMap(request, response, null));
             ctx = new ActionContext(stack.getContext());
@@ -148,6 +149,8 @@ public class PrepareOperations {
             // Wrap request first, just in case it is multipart/form-data
             // parameters might not be accessible through before encoding (ww-1278)
             request = dispatcher.wrapRequest(request);
+
+            // 源码解析: 重置ActionContext中的com.opensymphony.xwork2.dispatcher.HttpServletRequest的值
             ServletActionContext.setRequest(request);
         } catch (IOException e) {
             throw new ServletException("Could not wrap servlet request with MultipartRequestWrapper!", e);

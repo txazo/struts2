@@ -23,6 +23,8 @@ import java.util.Map;
  * earliest, looking for a bean with a getter or setter for the given property or a method of the given name (depending
  * on the expression being evaluated).
  */
+
+// 源码解析: 值栈, 允许push多个bean, 然后根据这些bean计算EL表达式
 public interface ValueStack {
 
     public static final String VALUE_STACK = "com.opensymphony.xwork2.util.ValueStack.ValueStack";

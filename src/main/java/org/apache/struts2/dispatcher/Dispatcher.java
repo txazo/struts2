@@ -544,9 +544,12 @@ public class Dispatcher {
      *
      * @since 2.3.17
      */
+
+    // 源码解析: 根据ActionMapping(name和namespace)加载Action, 并执行Action的方法
     public void serviceAction(HttpServletRequest request, HttpServletResponse response, ActionMapping mapping)
             throws ServletException {
 
+        // 源码解析: 创建ContextMap, 包装请求参数
         Map<String, Object> extraContext = createContextMap(request, response, mapping);
 
         // If there was a previous value stack, then create a new copy and pass it in to be used by the new Action
@@ -559,6 +562,7 @@ public class Dispatcher {
             }
         }
         if (stack != null) {
+            // 源码解析: 创建新的ValueStack, 并放入ContextMap
             extraContext.put(ActionContext.VALUE_STACK, valueStackFactory.createValueStack(stack));
         }
 
@@ -569,6 +573,7 @@ public class Dispatcher {
             String name = mapping.getName();
             String method = mapping.getMethod();
 
+            // 源码解析: 创建指定namespace和name的Action代理, 并完全初始化, 且包含一个ActionInvocation
             ActionProxy proxy = getContainer().getInstance(ActionProxyFactory.class).createActionProxy(
                     namespace, name, method, extraContext, true, false);
 
@@ -579,6 +584,7 @@ public class Dispatcher {
                 Result result = mapping.getResult();
                 result.execute(proxy.getInvocation());
             } else {
+                // 源码解析: 执行Action代理
                 proxy.execute();
             }
 
@@ -628,6 +634,24 @@ public class Dispatcher {
      * @return A map of context objects
      *
      * @since 2.3.17
+     */
+
+    /**
+     * 源码解析: 创建ContextMap, 包含所有包装的请求对象
+     *
+     * com.opensymphony.xwork2.ActionContext.parameters
+     * com.opensymphony.xwork2.ActionContext.session
+     * com.opensymphony.xwork2.ActionContext.application
+     * com.opensymphony.xwork2.ActionContext.locale
+     * com.opensymphony.xwork2.dispatcher.HttpServletRequest
+     * com.opensymphony.xwork2.dispatcher.HttpServletResponse
+     * com.opensymphony.xwork2.dispatcher.ServletContext
+     * request
+     * session
+     * application
+     * parameters
+     * attr
+     * struts.actionMapping
      */
     public Map<String,Object> createContextMap(HttpServletRequest request, HttpServletResponse response,
             ActionMapping mapping) {

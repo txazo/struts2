@@ -26,9 +26,13 @@ import java.io.Serializable;
  * @author <a href="mailto:hermanns@aixcept.de">Rainer Hermanns</a>
  * @version $Id$
  */
+
+// 源码解析: 拦截器映射
 public class InterceptorMapping implements Serializable {
 
+    // 名称
     private String name;
+    // 拦截器
     private Interceptor interceptor;
 
     public InterceptorMapping(String name, Interceptor interceptor) {
