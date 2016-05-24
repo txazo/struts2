@@ -26,11 +26,14 @@ package com.opensymphony.xwork2.inject;
  * @author crazybob@google.com (Bob Lee)
  */
 
-// 源码解析: key, 由type和name唯一标识
+// 源码解析: 依赖映射key, 由type和name唯一标识
 class Key<T> {
 
+    // 类型
     final Class<T> type;
+    // 名称
     final String name;
+    // 哈希值
     final int hashCode;
 
     private Key(Class<T> type, String name) {

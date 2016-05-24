@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author crazybob@google.com (Bob Lee)
  */
 
-// 源码解析: 创建被注入的对象
+// 源码解析: 内部工厂, 用来创建注入对象
 interface InternalFactory<T> extends Serializable {
 
   /**

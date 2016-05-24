@@ -23,6 +23,15 @@ package com.opensymphony.xwork2.inject.util;
  * @see java.lang.ref.Reference
  * @author crazybob@google.com (Bob Lee)
  */
+
+/**
+ * 源码解析: 引用类型, 用来指定哪一种引用
+ *
+ * STRONG, 强引用类型
+ * SOFT, 软引用类型
+ * WEAK, 弱引用类型
+ * PHANTOM, 虚引用类型
+ */
 public enum ReferenceType {
 
   /**

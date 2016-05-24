@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * @author crazybob@google.com (Bob Lee)
  */
 
-// 源码解析: 注入属性或参数的注解
+// 源码解析: 属性或方法参数注入的注解
 @Target({METHOD, CONSTRUCTOR, FIELD, PARAMETER})
 @Retention(RUNTIME)
 public @interface Inject {
@@ -39,6 +39,8 @@ public @interface Inject {
   /**
    * @return Dependency name. Defaults to {@link Container#DEFAULT_NAME}.
    */
+
+  // 源码解析: 依赖名称, 默认为default
   String value() default DEFAULT_NAME;
 
   /**

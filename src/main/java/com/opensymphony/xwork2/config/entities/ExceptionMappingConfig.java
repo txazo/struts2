@@ -30,9 +30,12 @@ import java.util.Map;
  * @author Rainer Hermanns
  * @author Matthew E. Porter (matthew dot porter at metissian dot com)
  */
+
+// 源码解析: 异常映射配置
 public class ExceptionMappingConfig extends Located implements Serializable {
 
     protected String name;
+    // 异常类名
     protected String exceptionClassName;
     protected String result;
     protected Map<String,String> params;

@@ -32,6 +32,8 @@ import static com.opensymphony.xwork2.inject.util.ReferenceType.STRONG;
  *
  * @author crazybob@google.com (Bob Lee)
  */
+
+// 源码解析: 继承自ReferenceMap, 支持延迟加载value
 public abstract class ReferenceCache<K, V> extends ReferenceMap<K, V> {
 
     private static final long serialVersionUID = 0;

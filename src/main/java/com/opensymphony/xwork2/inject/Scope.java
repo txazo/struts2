@@ -210,6 +210,8 @@ public enum Scope {
      * pass to {@link
      * Container#setScopeStrategy(com.opensymphony.xwork2.inject.Scope.Strategy)}.
      */
+
+    // 源码解析: 可插拔的作用域策略
     public interface Strategy {
 
         /**

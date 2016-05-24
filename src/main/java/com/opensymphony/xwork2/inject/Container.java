@@ -84,6 +84,8 @@ public interface Container extends Serializable {
    *
    * @param o object to inject
    */
+
+  // 源码解析: 对象的Field和Method依赖注入
   void inject(Object o);
 
   /**
@@ -93,6 +95,8 @@ public interface Container extends Serializable {
    * @param implementation of dependency
    * @return instance
    */
+
+  // 源码解析: 实例化类并注入依赖
   <T> T inject(Class<T> implementation);
 
   /**
@@ -104,6 +108,8 @@ public interface Container extends Serializable {
    * @param name of dependency
    * @return instance
    */
+
+  // 源码解析: 获取指定依赖的实例
   <T> T getInstance(Class<T> type, String name);
 
   /**
@@ -114,6 +120,8 @@ public interface Container extends Serializable {
    * @param type of dependency
    * @return instance
    */
+
+  // 源码解析: 获取指定类型的实例
   <T> T getInstance(Class<T> type);
   
   /**
@@ -121,6 +129,8 @@ public interface Container extends Serializable {
    * @param type The instance type
    * @return A set of registered names or empty set if no instances are registered for that type
    */
+
+  // 源码解析: 获取指定类型的所有已注册名称
   Set<String> getInstanceNames(Class<?> type);
 
   /**
@@ -128,10 +138,14 @@ public interface Container extends Serializable {
    *
    * @param scopeStrategy scope strategy
    */
+
+  // 源码解析: 设置当前线程的作用域策略
   void setScopeStrategy(Scope.Strategy scopeStrategy);
 
   /**
    * Removes the scope strategy for the current thread.
    */
+
+  // 源码解析: 删除当前线程的作用域策略
   void removeScopeStrategy();
 }

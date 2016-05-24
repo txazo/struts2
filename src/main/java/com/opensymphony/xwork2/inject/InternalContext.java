@@ -25,10 +25,14 @@ import java.util.Map;
  *
  * @author crazybob@google.com (Bob Lee)
  */
+
+// 源码解析: 内部上下文, 用来协调注入和主持循环依赖
 class InternalContext {
 
+  // 容器
   final ContainerImpl container;
   final Map<Object, ConstructionContext<?>> constructionContexts = new HashMap<Object, ConstructionContext<?>>();
+  // 作用域策略
   Scope.Strategy scopeStrategy;
   ExternalContext<?> externalContext;
 

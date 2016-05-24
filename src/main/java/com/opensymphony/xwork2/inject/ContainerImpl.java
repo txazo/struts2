@@ -36,10 +36,12 @@ import java.util.Map.Entry;
  * @see ContainerBuilder
  */
 
-// 源码解析: 容器Container的默认实现
+// 源码解析: 容器的默认实现
 class ContainerImpl implements Container {
 
+    // 源码解析: 内部工厂集合
     final Map<Key<?>, InternalFactory<?>> factories;
+    // 源码解析: 内部工厂的名称集合
     final Map<Class<?>, Set<String>> factoryNamesByType;
 
     ContainerImpl(Map<Key<?>, InternalFactory<?>> factories) {
@@ -58,9 +60,11 @@ class ContainerImpl implements Container {
             entry.setValue(Collections.unmodifiableSet(entry.getValue()));
         }
 
+        // 源码解析: 保证factoryNamesByType不可变
         this.factoryNamesByType = Collections.unmodifiableMap(map);
     }
 
+    // 源码解析: 根据key获取内部工厂
     @SuppressWarnings("unchecked")
     <T> InternalFactory<? extends T> getFactory(Key<T> key) {
         return (InternalFactory<T>) factories.get(key);
@@ -69,6 +73,7 @@ class ContainerImpl implements Container {
     /**
      * Field and method injectors.
      */
+    // 源码解析: 依赖注入的集合
     final Map<Class<?>, List<Injector>> injectors =
             new ReferenceCache<Class<?>, List<Injector>>() {
                 @Override
@@ -89,10 +94,16 @@ class ContainerImpl implements Container {
         }
 
         // Add injectors for superclass first.
+
+        // 源码解析: 父类添加Injector
         addInjectors(clazz.getSuperclass(), injectors);
 
         // TODO (crazybob): Filter out overridden members.
+
+        // 源码解析: 添加Field Injector
         addInjectorsForFields(clazz.getDeclaredFields(), false, injectors);
+
+        // 源码解析: 添加Method Injector
         addInjectorsForMethods(clazz.getDeclaredMethods(), false, injectors);
     }
 
