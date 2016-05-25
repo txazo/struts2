@@ -12,8 +12,12 @@
         <filter-name>struts2</filter-name>
         <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
         <init-param>
+            <param-name>packages</param-name>
+            <param-value>org.apache.struts2.dispatcher</param-value>
+        </init-param>
+        <init-param>
             <param-name>configProviders</param-name>
-            <param-value>test.struts2.config.CustomContainerProvider</param-value>
+            <param-value>test.struts2.inject.provider.CustomContainerProvider</param-value>
         </init-param>
     </filter>
 

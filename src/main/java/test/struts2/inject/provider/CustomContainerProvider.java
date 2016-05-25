@@ -1,4 +1,4 @@
-package test.struts2.config;
+package test.struts2.inject.provider;
 
 import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.ConfigurationException;

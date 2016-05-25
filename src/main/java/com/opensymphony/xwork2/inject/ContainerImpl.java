@@ -112,10 +112,14 @@ class ContainerImpl implements Container {
         final List<Injector> injectors = new ArrayList<>();
 
         for (Class<?> clazz : staticInjections) {
+            // 源码解析: 查找并添加静态属性注入
             addInjectorsForFields(clazz.getDeclaredFields(), true, injectors);
+
+            // 源码解析: 查找并添加静态方法注入
             addInjectorsForMethods(clazz.getDeclaredMethods(), true, injectors);
         }
 
+        // 源码解析: 静态属性和方法依赖注入
         callInContext(new ContextualCallable<Void>() {
             public Void call(InternalContext context) {
                 for (Injector injector : injectors) {

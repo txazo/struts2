@@ -7,6 +7,9 @@
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.i18n.encoding" value="UTF-8"/>
 
+    <!-- 静态资源拦截开关 -->
+    <constant name="struts.serve.static" value="false"/>
+
     <!-- 静态注入 -->
     <bean class="test.struts2.inject.StaticConstant" static="true"/>
 

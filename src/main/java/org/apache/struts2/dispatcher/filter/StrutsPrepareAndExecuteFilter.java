@@ -91,10 +91,10 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
             postInit(dispatcher, filterConfig);
         } finally {
             if (dispatcher != null) {
-                // 源码解析: Dispatcher初始化后clean, ContainerHolder.instance.remove()
+                // 源码解析: Dispatcher初始化后clean, 清除ThreadLocal中的容器
                 dispatcher.cleanUpAfterInit();
             }
-            // 源码解析: ActionContext.actionContext.set(null)
+            // 源码解析: ThreadLocal的ActionContext清除
             init.cleanup();
         }
     }
@@ -114,17 +114,24 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         try {
+            // 源码解析: 解析请求的uri
             String uri = RequestUtils.getUri(request);
 
             // 源码解析: 判断是否过滤的请求
             if (excludedPatterns != null && prepare.isUrlExcluded(request, excludedPatterns)) {
                 LOG.trace("Request {} is excluded from handling by Struts, passing request to other filters", uri);
+
+                // 源码解析: 被过滤的请求, 不进入Struts2的执行流程, 传递给下一个过滤器处理
                 chain.doFilter(request, response);
             } else {
                 LOG.trace("Checking if {} is a static resource", uri);
 
+                // 源码解析: 进入Struts2的执行流程
+
                 /**
                  * 源码解析: 检查是否静态资源请求, 请求以/struts/或/static/开头, 静态资源在classpath以下目录
+                 *
+                 * 默认开启静态资源拦截, 可设置struts.serve.static=false禁用
                  *
                  * static/
                  * template/

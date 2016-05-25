@@ -497,7 +497,7 @@ public class Dispatcher {
             /**
              * 源码解析: 加载Struts2的xml配置
              *
-             * 注册StrutsXmlConfigurationProvider, 依次加载struts-default.xml、struts-plugin.xml、struts.xml中的bean
+             * 注册StrutsXmlConfigurationProvider, 依次加载struts-default.xml、struts-plugin.xml、struts.xml中的bean和constant到容器
              */
             init_TraditionalXmlConfigurations(); // [2]
 
@@ -532,17 +532,20 @@ public class Dispatcher {
             // 源码解析: 预加载配置
             Container container = init_PreloadConfiguration();
 
-            // 源码解析: 依赖注入Dispatcher
+            // 源码解析: Dispatcher依赖注入
             container.inject(this);
 
             // 源码解析: 检查WebLogic
             init_CheckWebLogicWorkaround(container);
 
+            // 源码解析: Dispatcher监听器初始化
             if (!dispatcherListeners.isEmpty()) {
                 for (DispatcherListener l : dispatcherListeners) {
                     l.dispatcherInitialized(this);
                 }
             }
+
+            // 源码解析: 错误处理器初始化, 初始化错误模板
             errorHandler.init(servletContext);
 
         } catch (Exception ex) {
