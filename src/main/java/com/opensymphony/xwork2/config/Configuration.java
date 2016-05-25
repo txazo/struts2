@@ -30,6 +30,8 @@ import java.util.Set;
  *
  * @author Mike
  */
+
+// 源码解析: XWork配置
 public interface Configuration extends Serializable {
 
     void rebuildRuntimeConfiguration();

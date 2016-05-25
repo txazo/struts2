@@ -31,6 +31,8 @@ import java.util.regex.Pattern;
 /**
  * Contains initialization operations
  */
+
+// 源码解析: Struts2核心过滤器的初始化操作
 public class InitOperations {
 
     public InitOperations() {
@@ -113,6 +115,7 @@ public class InitOperations {
      * @return The dispatcher on the thread.
      */
     private Dispatcher createDispatcher( HostConfig filterConfig ) {
+        // 源码解析: 解析过滤器的初始化参数到Map中
         Map<String, String> params = new HashMap<>();
         for ( Iterator e = filterConfig.getInitParameterNames(); e.hasNext(); ) {
             String name = (String) e.next();
@@ -120,7 +123,7 @@ public class InitOperations {
             params.put(name, value);
         }
 
-        // 源码解析: 创建Dispatcher, 传入ServletContext和初始化参数
+        // 源码解析: 创建Dispatcher, 传入Servlet上下文和过滤器的初始化参数
         return new Dispatcher(filterConfig.getServletContext(), params);
     }
 

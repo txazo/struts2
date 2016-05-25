@@ -47,12 +47,19 @@ import java.util.regex.Pattern;
  * when you don't have another filter that needs access to action context information, such as Sitemesh.
  */
 
-// 源码解析: Struts2核心过滤器
+/**
+ * 源码解析: Struts2核心过滤器
+ *
+ * 注: 如果有其它的过滤器要访问action上下文信息, 比如Sitemesh, 使用StrutsPrepareFilter和StrutsExecuteFilter
+ */
 public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
 
     private static final Logger LOG = LogManager.getLogger(StrutsPrepareAndExecuteFilter.class);
 
+    // 源码解析: 负责请求执行前的准备操作
     protected PrepareOperations prepare;
+
+    // 源码解析: 负责请求执行操作
     protected ExecuteOperations execute;
 
     // 源码解析: 过滤的请求
@@ -65,7 +72,7 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
             // 源码解析: 封装FilterConfig
             FilterHostConfig config = new FilterHostConfig(filterConfig);
 
-            // 源码解析: 初始化日志(Struts2实现的日志), 2.5版本之后弃用, 改用Log4j 2日志
+            // 源码解析: 初始化Struts2内部日志, 2.5版本之后弃用, 改用Log4j 2日志
             init.initLogging(config);
 
             // 源码解析: 创建并初始化Dispatcher

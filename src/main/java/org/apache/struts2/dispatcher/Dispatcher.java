@@ -74,6 +74,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @see InitOperations
  */
+
+// 源码解析: 调度器, 负责大部分任务的调度, 每个主调度器持有一个被所有请求共享的调度器的实例
 public class Dispatcher {
 
     /**
@@ -462,7 +464,7 @@ public class Dispatcher {
      */
 
     /**
-     *  源码解析
+     * 源码解析: Dispatcher初始化
      *
      * 加载配置, 包括XML配置和零配置
      * 更新可选设置, 包括是否重新加载配置和资源文件
@@ -470,18 +472,30 @@ public class Dispatcher {
     public void init() {
 
     	if (configurationManager == null) {
-            // 源码解析: 创建配置管理器ConfigurationManager
+            // 源码解析: 创建配置管理器
     		configurationManager = createConfigurationManager(DefaultBeanSelectionProvider.DEFAULT_BEAN_NAME);
     	}
 
         try {
-            // 源码解析: 初始化文件管理器FileManager
+            /**
+             * 源码解析: 初始化文件管理器
+             *
+             * 添加FileManagerProvider, 注册FileManager到容器中
+             */
             init_FileManager();
 
-            // 源码解析: 加载配置文件org/apache/struts2/default.properties
+            /**
+             * 源码解析: 加载默认属性
+             *
+             * 添加DefaultPropertiesProvider, 加载org/apache/struts2/default.properties的配置到容器中
+             */
             init_DefaultProperties(); // [1]
 
-            // 源码解析: 加载配置文件struts-default.xml、struts-plugin.xml、struts.xml
+            /**
+             * 源码解析: 加载Struts2的xml配置
+             *
+             * 添加StrutsXmlConfigurationProvider, 依次加载struts-default.xml、struts-plugin.xml、struts.xml中的bean
+             */
             init_TraditionalXmlConfigurations(); // [2]
 
             // 源码解析: 加载Properties文件stuts.properties、struts.custom.properties
