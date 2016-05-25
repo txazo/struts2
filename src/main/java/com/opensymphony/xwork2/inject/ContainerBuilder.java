@@ -39,7 +39,7 @@ import java.util.logging.Logger;
  * @author crazybob@google.com (Bob Lee)
  */
 
-// 源码解析:
+// 源码解析: 容器构建器
 public final class ContainerBuilder {
 
     final Map<Key<?>, InternalFactory<?>> factories = new HashMap<>();
@@ -565,8 +565,10 @@ public final class ContainerBuilder {
     public Container create(boolean loadSingletons) {
         ensureNotCreated();
         created = true;
+        // 源码解析: 创建容器实例ContainerImpl
         final ContainerImpl container = new ContainerImpl(new HashMap<>(factories));
         if (loadSingletons) {
+            // 源码解析: 初始化容器中单例模式的bean
             container.callInContext(new ContainerImpl.ContextualCallable<Void>() {
                 public Void call(InternalContext context) {
                     for (InternalFactory<?> factory : singletonFactories) {
@@ -576,6 +578,8 @@ public final class ContainerBuilder {
                 }
             });
         }
+
+        // 源码解析: 静态注入
         container.injectStatics(staticInjections);
         return container;
     }

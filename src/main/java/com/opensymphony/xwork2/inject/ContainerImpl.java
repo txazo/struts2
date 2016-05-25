@@ -39,9 +39,10 @@ import java.util.Map.Entry;
 // 源码解析: 容器的默认实现
 class ContainerImpl implements Container {
 
-    // 源码解析: 内部工厂集合
+    // 源码解析: 容器中对象的工厂集合
     final Map<Key<?>, InternalFactory<?>> factories;
-    // 源码解析: 内部工厂的名称集合
+
+    // 源码解析: 容器中按class type区分的名称集合
     final Map<Class<?>, Set<String>> factoryNamesByType;
 
     ContainerImpl(Map<Key<?>, InternalFactory<?>> factories) {

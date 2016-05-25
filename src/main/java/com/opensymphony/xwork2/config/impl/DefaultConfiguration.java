@@ -149,6 +149,7 @@ public class DefaultConfiguration implements Configuration {
      * @throws ConfigurationException in case of any configuration errors
      */
     public synchronized List<PackageProvider> reloadContainer(List<ContainerProvider> providers) throws ConfigurationException {
+        // 源码解析: 清空操作
         packageContexts.clear();
         loadedFileNames.clear();
         List<PackageProvider> packageProviders = new ArrayList<>();
@@ -226,6 +227,8 @@ public class DefaultConfiguration implements Configuration {
     protected Container createBootstrapContainer(List<ContainerProvider> providers) {
         ContainerBuilder builder = new ContainerBuilder();
         boolean fmFactoryRegistered = false;
+
+        // 源码解析: 文件管理器注册
         for (ContainerProvider provider : providers) {
             if (provider instanceof FileManagerProvider) {
                 provider.register(builder, null);
@@ -235,6 +238,8 @@ public class DefaultConfiguration implements Configuration {
                 fmFactoryRegistered = true;
             }
         }
+
+        // 源码解析: 注册bean到容器
         builder.factory(ObjectFactory.class, Scope.SINGLETON);
         builder.factory(ActionFactory.class, DefaultActionFactory.class, Scope.SINGLETON);
         builder.factory(ResultFactory.class, DefaultResultFactory.class, Scope.SINGLETON);
@@ -271,12 +276,14 @@ public class DefaultConfiguration implements Configuration {
         builder.factory(PropertyAccessor.class, CompoundRoot.class.getName(), CompoundRootAccessor.class, Scope.SINGLETON);
         builder.factory(OgnlUtil.class, Scope.SINGLETON);
 
+        // 源码解析: 初始化容器的属性值
         builder.constant(XWorkConstants.DEV_MODE, "false");
         builder.constant(XWorkConstants.LOG_MISSING_PROPERTIES, "false");
         builder.constant(XWorkConstants.ENABLE_OGNL_EVAL_EXPRESSION, "false");
         builder.constant(XWorkConstants.ENABLE_OGNL_EXPRESSION_CACHE, "true");
         builder.constant(XWorkConstants.RELOAD_XML_CONFIGURATION, "false");
 
+        // 源码解析: 创建容器并返回
         return builder.create(true);
     }
 

@@ -436,11 +436,14 @@ public class Dispatcher {
     }
 
     private Container init_PreloadConfiguration() {
+        // 源码解析: 获取容器
         Container container = getContainer();
 
+        // 源码解析: 是否reload资源文件
         boolean reloadi18n = Boolean.valueOf(container.getInstance(String.class, StrutsConstants.STRUTS_I18N_RELOAD));
         LocalizedTextUtil.setReloadBundles(reloadi18n);
 
+        // 源码解析: 是否开发模式
         boolean devMode = Boolean.valueOf(container.getInstance(String.class, StrutsConstants.STRUTS_DEVMODE));
         LocalizedTextUtil.setDevMode(devMode);
 
@@ -480,34 +483,50 @@ public class Dispatcher {
             /**
              * 源码解析: 初始化文件管理器
              *
-             * 添加FileManagerProvider, 注册FileManager到容器中
+             * 注册FileManagerProvider, 注册FileManager到容器中
              */
             init_FileManager();
 
             /**
              * 源码解析: 加载默认属性
              *
-             * 添加DefaultPropertiesProvider, 加载org/apache/struts2/default.properties的配置到容器中
+             * 注册DefaultPropertiesProvider, 加载org/apache/struts2/default.properties的配置到容器中
              */
             init_DefaultProperties(); // [1]
 
             /**
              * 源码解析: 加载Struts2的xml配置
              *
-             * 添加StrutsXmlConfigurationProvider, 依次加载struts-default.xml、struts-plugin.xml、struts.xml中的bean
+             * 注册StrutsXmlConfigurationProvider, 依次加载struts-default.xml、struts-plugin.xml、struts.xml中的bean
              */
             init_TraditionalXmlConfigurations(); // [2]
 
-            // 源码解析: 加载Properties文件stuts.properties、struts.custom.properties
+            /**
+             * 源码解析: 加载自定义的Struts属性文件
+             *
+             * 注册PropertiesConfigurationProvider, 先尝试加载stuts.properties, 然后尝试加载stuts.properties中struts.custom.properties指定的属性文件
+             */
             init_LegacyStrutsProperties(); // [3]
 
-            // 源码解析: 初始化自定义的ConfigurationProvider
+            /**
+             * 源码解析: 初始化自定义的ConfigurationProvider
+             *
+             * 注册自定义的ConfigurationProvider, 通过核心过滤器的初始化参数configProviders指定
+             */
             init_CustomConfigurationProviders(); // [5]
 
-            // 源码解析: 初始化Filter的初始化参数
+            /**
+             * 源码解析: 初始化Filter的初始化参数
+             *
+             * 注册核心过滤器的初始化参数到容器
+             */
             init_FilterInitParameters() ; // [6]
 
-            // 源码解析: 初始化对象别名
+            /**
+             * 源码解析: 初始化对象别名
+             *
+             * 注册DefaultBeanSelectionProvider
+             */
             init_AliasStandardObjects() ; // [7]
 
             // 源码解析: 预加载配置
@@ -953,7 +972,7 @@ public class Dispatcher {
      * @return Our dependency injection container
      */
 
-    // 源码解析: 获取依赖注入容器
+    // 源码解析: 获取容器
     public Container getContainer() {
         if (ContainerHolder.get() != null) {
             return ContainerHolder.get();
@@ -962,6 +981,7 @@ public class Dispatcher {
         if (mgr == null) {
             throw new IllegalStateException("The configuration manager shouldn't be null");
         } else {
+            // 源码解析: 加载配置
             Configuration config = mgr.getConfiguration();
             if (config == null) {
                 throw new IllegalStateException("Unable to load configuration");

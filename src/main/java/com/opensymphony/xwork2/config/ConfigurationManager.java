@@ -70,9 +70,10 @@ public class ConfigurationManager {
      */
     public synchronized Configuration getConfiguration() {
         if (configuration == null) {
+            // 源码解析: 创建DefaultConfiguration实例
             setConfiguration(createConfiguration(defaultFrameworkBeanName));
             try {
-                // 源码解析: 重新加载容器
+                // 源码解析: 根据ContainerProvider重新加载容器
                 configuration.reloadContainer(getContainerProviders());
             } catch (ConfigurationException e) {
                 setConfiguration(null);

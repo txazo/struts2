@@ -363,6 +363,7 @@ public class DefaultBeanSelectionProvider extends AbstractBeanSelectionProvider 
     private static final Logger LOG = LogManager.getLogger(DefaultBeanSelectionProvider.class);
 
     public void register(ContainerBuilder builder, LocatableProperties props) {
+        // 源码解析: 给容器中的bean添加default别名
         alias(ObjectFactory.class, StrutsConstants.STRUTS_OBJECTFACTORY, builder, props);
         alias(ActionFactory.class, StrutsConstants.STRUTS_OBJECTFACTORY_ACTIONFACTORY, builder, props);
         alias(ResultFactory.class, StrutsConstants.STRUTS_OBJECTFACTORY_RESULTFACTORY, builder, props);
@@ -414,9 +415,12 @@ public class DefaultBeanSelectionProvider extends AbstractBeanSelectionProvider 
         alias(ExcludedPatternsChecker.class, StrutsConstants.STRUTS_EXCLUDED_PATTERNS_CHECKER, builder, props, Scope.PROTOTYPE);
         alias(AcceptedPatternsChecker.class, StrutsConstants.STRUTS_ACCEPTED_PATTERNS_CHECKER, builder, props, Scope.PROTOTYPE);
 
+        // 源码解析: 开发模式的特殊处理
         switchDevMode(props);
 
         // Convert Struts properties into XWork properties
+
+        // 源码解析: 复制Struts的部分配置到XWork配置
         convertIfExist(props, StrutsConstants.STRUTS_LOG_MISSING_PROPERTIES, XWorkConstants.LOG_MISSING_PROPERTIES);
         convertIfExist(props, StrutsConstants.STRUTS_ENABLE_OGNL_EXPRESSION_CACHE, XWorkConstants.ENABLE_OGNL_EXPRESSION_CACHE);
         convertIfExist(props, StrutsConstants.STRUTS_ENABLE_OGNL_EVAL_EXPRESSION, XWorkConstants.ENABLE_OGNL_EVAL_EXPRESSION);
@@ -432,7 +436,10 @@ public class DefaultBeanSelectionProvider extends AbstractBeanSelectionProvider 
         convertIfExist(props, StrutsConstants.STRUTS_OVERRIDE_EXCLUDED_PATTERNS, XWorkConstants.OVERRIDE_EXCLUDED_PATTERNS);
         convertIfExist(props, StrutsConstants.STRUTS_OVERRIDE_ACCEPTED_PATTERNS, XWorkConstants.OVERRIDE_ACCEPTED_PATTERNS);
 
+        // 源码解析: 添加默认的资源文件
         LocalizedTextUtil.addDefaultResourceBundle("org/apache/struts2/struts-messages");
+
+        // 源码解析: 添加自定义的资源文件, 由struts.custom.i18n.resources指定
         loadCustomResourceBundles(props);
     }
 
