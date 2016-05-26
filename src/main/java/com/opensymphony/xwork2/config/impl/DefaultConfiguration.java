@@ -388,18 +388,23 @@ public class DefaultConfiguration implements Configuration {
      * @throws com.opensymphony.xwork2.config.ConfigurationException
      *
      */
+
+    // 构建完整的运行时action配置
     private ActionConfig buildFullActionConfig(PackageConfig packageContext, ActionConfig baseConfig) throws ConfigurationException {
         Map<String, String> params = new TreeMap<>(baseConfig.getParams());
         Map<String, ResultConfig> results = new TreeMap<>();
 
+        // 添加全局result
         if (!baseConfig.getPackageName().equals(packageContext.getName()) && packageContexts.containsKey(baseConfig.getPackageName())) {
             results.putAll(packageContexts.get(baseConfig.getPackageName()).getAllGlobalResults());
         } else {
             results.putAll(packageContext.getAllGlobalResults());
         }
 
+        // 添加action配置的result
        	results.putAll(baseConfig.getResults());
 
+        // Result为空, 设置默认值
         setDefaultResults(results, packageContext);
 
         List<InterceptorMapping> interceptors = new ArrayList<>(baseConfig.getInterceptors());
