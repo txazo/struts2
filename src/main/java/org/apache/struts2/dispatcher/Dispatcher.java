@@ -977,9 +977,13 @@ public class Dispatcher {
 
     // 源码解析: 获取容器
     public Container getContainer() {
+        // 源码解析: 先尝试从ThreadLocal中获取容器
         if (ContainerHolder.get() != null) {
             return ContainerHolder.get();
         }
+
+        // 源码解析: 容器未创建, 创建一个新的容器
+
         ConfigurationManager mgr = getConfigurationManager();
         if (mgr == null) {
             throw new IllegalStateException("The configuration manager shouldn't be null");

@@ -363,7 +363,7 @@ public class DefaultBeanSelectionProvider extends AbstractBeanSelectionProvider 
     private static final Logger LOG = LogManager.getLogger(DefaultBeanSelectionProvider.class);
 
     public void register(ContainerBuilder builder, LocatableProperties props) {
-        // 源码解析: 给容器中的bean添加default别名
+        // 源码解析: 给容器中的bean添加"default"别名
         alias(ObjectFactory.class, StrutsConstants.STRUTS_OBJECTFACTORY, builder, props);
         alias(ActionFactory.class, StrutsConstants.STRUTS_OBJECTFACTORY_ACTIONFACTORY, builder, props);
         alias(ResultFactory.class, StrutsConstants.STRUTS_OBJECTFACTORY_RESULTFACTORY, builder, props);
@@ -436,7 +436,7 @@ public class DefaultBeanSelectionProvider extends AbstractBeanSelectionProvider 
         convertIfExist(props, StrutsConstants.STRUTS_OVERRIDE_EXCLUDED_PATTERNS, XWorkConstants.OVERRIDE_EXCLUDED_PATTERNS);
         convertIfExist(props, StrutsConstants.STRUTS_OVERRIDE_ACCEPTED_PATTERNS, XWorkConstants.OVERRIDE_ACCEPTED_PATTERNS);
 
-        // 源码解析: 添加默认的资源文件
+        // 源码解析: 添加默认的资源文件com/opensymphony/xwork2/xwork-messages和org/apache/struts2/struts-messages
         LocalizedTextUtil.addDefaultResourceBundle("org/apache/struts2/struts-messages");
 
         // 源码解析: 添加自定义的资源文件, 由struts.custom.i18n.resources指定

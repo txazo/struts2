@@ -568,7 +568,7 @@ public final class ContainerBuilder {
         // 源码解析: 创建容器实例ContainerImpl
         final ContainerImpl container = new ContainerImpl(new HashMap<>(factories));
         if (loadSingletons) {
-            // 源码解析: 初始化容器中单例模式的bean
+            // 源码解析: 初始化容器中单例的bean
             container.callInContext(new ContainerImpl.ContextualCallable<Void>() {
                 public Void call(InternalContext context) {
                     for (InternalFactory<?> factory : singletonFactories) {

@@ -73,13 +73,14 @@ public class ConfigurationManager {
             // 源码解析: 创建DefaultConfiguration实例
             setConfiguration(createConfiguration(defaultFrameworkBeanName));
             try {
-                // 源码解析: 根据ContainerProvider重新加载容器
+                // 源码解析: 根据注册的ContainerProvider重新加载容器
                 configuration.reloadContainer(getContainerProviders());
             } catch (ConfigurationException e) {
                 setConfiguration(null);
                 throw new ConfigurationException("Unable to load configuration.", e);
             }
         } else {
+            // 源码解析: 根据条件重新加载容器
             conditionalReload();
         }
 
@@ -185,13 +186,17 @@ public class ConfigurationManager {
         if (reloadConfigs || providersChanged) {
             LOG.debug("Checking ConfigurationProviders for reload.");
             List<ContainerProvider> providers = getContainerProviders();
+            // 源码解析: 遍历ContainerProvider, 决定是否重新加载
             boolean reload = needReloadContainerProviders(providers);
             if (!reload) {
+                // 源码解析: 遍历PackageProvider, 决定是否重新加载
                 reload = needReloadPackageProviders();
             }
             if (reload) {
+                // 源码解析: 重新加载容器
                 reloadProviders(providers);
             }
+            // 源码解析: 更新reloadConfigs和providersChanged
             updateReloadConfigsFlag();
             providersChanged = false;
         }

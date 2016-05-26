@@ -50,22 +50,24 @@ import java.util.regex.Pattern;
 /**
  * 源码解析: Struts2核心过滤器
  *
- * 注: 如果有其它的过滤器要访问action上下文信息, 比如Sitemesh, 使用StrutsPrepareFilter和StrutsExecuteFilter
+ * 注: 如果有其它的过滤器要访问action上下文信息, 比如Sitemesh, 使用StrutsPrepareFilter和StrutsExecuteFilter代替StrutsPrepareAndExecuteFilter
  */
 public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
 
     private static final Logger LOG = LogManager.getLogger(StrutsPrepareAndExecuteFilter.class);
 
-    // 源码解析: 负责请求执行前的准备操作
+    // 源码解析: 负责请求的准备操作
     protected PrepareOperations prepare;
 
-    // 源码解析: 负责请求执行操作
+    // 源码解析: 负责请求的执行操作
     protected ExecuteOperations execute;
 
     // 源码解析: 过滤的请求
     protected List<Pattern> excludedPatterns = null;
 
+    // 源码解析: 过滤器初始化
     public void init(FilterConfig filterConfig) throws ServletException {
+        // 源码解析: 负责过滤器的初始化操作
         InitOperations init = new InitOperations();
         Dispatcher dispatcher = null;
         try {

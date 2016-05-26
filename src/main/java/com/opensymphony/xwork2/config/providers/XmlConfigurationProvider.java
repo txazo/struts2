@@ -514,6 +514,7 @@ public class XmlConfigurationProvider implements ConfigurationProvider {
      * @throws ConfigurationException in case of configuration errors
      */
     protected PackageConfig addPackage(Element packageElement) throws ConfigurationException {
+        // 源码解析: 包名
         String packageName = packageElement.getAttribute("name");
         PackageConfig packageConfig = configuration.getPackageConfig(packageName);
         if (packageConfig != null) {

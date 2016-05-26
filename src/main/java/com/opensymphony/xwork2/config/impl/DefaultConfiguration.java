@@ -154,7 +154,9 @@ public class DefaultConfiguration implements Configuration {
         loadedFileNames.clear();
         List<PackageProvider> packageProviders = new ArrayList<>();
 
+        // 源码解析: 容器属性
         ContainerProperties props = new ContainerProperties();
+        // 源码解析: 容器构建器
         ContainerBuilder builder = new ContainerBuilder();
 
         // 源码解析: 创建启动容器
@@ -165,11 +167,14 @@ public class DefaultConfiguration implements Configuration {
             bootstrap.inject(containerProvider);
             // 源码解析: ContainerProvider初始化
             containerProvider.init(this);
-            // 源码解析: 注册容器的Bean和Propertie
+            // 源码解析: 注册Bean和Propertie到容器
             containerProvider.register(builder, props);
         }
+
+        // 源码解析: 属性注册到容器
         props.setConstants(builder);
 
+        // 源码解析: 设置容器中Configuration类型的实例为当前实例
         builder.factory(Configuration.class, new Factory<Configuration>() {
             public Configuration create(Context context) throws Exception {
                 return DefaultConfiguration.this;
@@ -180,30 +185,54 @@ public class DefaultConfiguration implements Configuration {
         try {
             // Set the bootstrap container for the purposes of factory creation
 
+            // 源码解析: 利用启动容器来创建ValueStackFactory工厂
             setContext(bootstrap);
+
+            // 源码解析: 创建真正的容器
             container = builder.create(false);
+
             setContext(container);
+
+            // 源码解析: 从容器中获取对象工厂
             objectFactory = container.getInstance(ObjectFactory.class);
 
             // Process the configuration providers first
+
+            // 源码解析: 先处理ConfigurationProvider,
             for (final ContainerProvider containerProvider : providers)
             {
                 if (containerProvider instanceof PackageProvider) {
+                    // 源码解析: 依赖注入
                     container.inject(containerProvider);
+                    // 源码解析: 加载struts的xml配置文件中的package配置
                     ((PackageProvider)containerProvider).loadPackages();
+                    // 源码解析: 添加到PackageProvider列表中
                     packageProviders.add((PackageProvider)containerProvider);
                 }
             }
 
             // Then process any package providers from the plugins
+
+            /**
+             * 源码解析: 处理插件中的PackageProvider
+             *
+             * struts2-convention-plugin插件, struts-plugin.xml配置两个PackageProvider
+             * 1) org.apache.struts2.convention.ClasspathPackageProvider, 加载Struts2的注解配置
+             * 2) org.apache.struts2.convention.ClasspathConfigurationProvider
+             */
             Set<String> packageProviderNames = container.getInstanceNames(PackageProvider.class);
             for (String name : packageProviderNames) {
+                // 源码解析: 从容器中获取对应的PackageProvider实例
                 PackageProvider provider = container.getInstance(PackageProvider.class, name);
+                // 源码解析: 依赖注入
                 provider.init(this);
+                // 源码解析: 加载package配置
                 provider.loadPackages();
+                // 源码解析: 添加到PackageProvider列表中
                 packageProviders.add(provider);
             }
 
+            // 源码解析: 重新构建运行时配置
             rebuildRuntimeConfiguration();
         } finally {
             if (oldContext == null) {
@@ -276,7 +305,7 @@ public class DefaultConfiguration implements Configuration {
         builder.factory(PropertyAccessor.class, CompoundRoot.class.getName(), CompoundRootAccessor.class, Scope.SINGLETON);
         builder.factory(OgnlUtil.class, Scope.SINGLETON);
 
-        // 源码解析: 初始化容器的属性值
+        // 源码解析: 注册属性到容器
         builder.constant(XWorkConstants.DEV_MODE, "false");
         builder.constant(XWorkConstants.LOG_MISSING_PROPERTIES, "false");
         builder.constant(XWorkConstants.ENABLE_OGNL_EVAL_EXPRESSION, "false");

@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
  * Contains preparation operations for a request before execution
  */
 
-// 源码解析: Request执行之前的准备操作
+// 源码解析: 负责请求的准备操作
 public class PrepareOperations {
 
     private static final Logger LOG = LogManager.getLogger(PrepareOperations.class);

@@ -13,4 +13,11 @@
     <!-- 静态注入 -->
     <bean class="test.struts2.inject.StaticConstant" static="true"/>
 
+    <!-- 包配置 -->
+    <package name="test" extends="struts-default">
+        <interceptors>
+            <interceptor name="actionScope" class="test.struts2.interceptor.ActionScopeInterceptor"/>
+        </interceptors>
+    </package>
+
 </struts>

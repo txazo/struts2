@@ -32,7 +32,7 @@ import java.io.IOException;
  * Contains execution operations for filters
  */
 
-// 源码解析: 过滤器的执行操作
+// 源码解析: 负责请求的执行操作
 public class ExecuteOperations {
 
     private Dispatcher dispatcher;
