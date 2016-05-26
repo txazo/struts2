@@ -74,16 +74,13 @@ public class DefaultActionProxyFactory implements ActionProxyFactory {
 
     public ActionProxy createActionProxy(ActionInvocation inv, String namespace, String actionName, String methodName, boolean executeResult, boolean cleanupContext) {
 
+        // 源码解析: 创建action代理
         DefaultActionProxy proxy = new DefaultActionProxy(inv, namespace, actionName, methodName, executeResult, cleanupContext);
 
-        // 源码解析: DefaultActionProxy依赖注入
+        // 源码解析: action代理依赖注入
         container.inject(proxy);
 
-        /**
-         * 源码解析: ActionProxy的准备操作
-         *
-         * 1) 根据namespace和actionName从Configuration中查找ActionConfig
-         */
+        // 源码解析: action代理初始化
         proxy.prepare();
         return proxy;
     }

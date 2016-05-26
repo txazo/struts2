@@ -80,6 +80,7 @@ public class ExecuteOperations {
      * @throws ServletException  on any servlet related error
      */
     public void executeAction(HttpServletRequest request, HttpServletResponse response, ActionMapping mapping) throws ServletException {
+        // 源码解析: action执行操作委托给dispatcher
         dispatcher.serviceAction(request, response, mapping);
     }
 }

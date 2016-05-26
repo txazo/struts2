@@ -351,6 +351,13 @@ public class DefaultConfiguration implements Configuration {
                 for (Object o : actionConfigs.keySet()) {
                     String actionName = (String) o;
                     ActionConfig baseConfig = actionConfigs.get(actionName);
+                    /**
+                     * 源码解析: 构建完整的action配置, 包括:
+                     *
+                     * Result
+                     * 拦截器
+                     * 异常映射
+                     */
                     configs.put(actionName, buildFullActionConfig(packageConfig, baseConfig));
                 }
 
@@ -362,6 +369,8 @@ public class DefaultConfiguration implements Configuration {
         }
 
         PatternMatcher<int[]> matcher = container.getInstance(PatternMatcher.class);
+
+        // 源码解析: 创建运行时配置
         return new RuntimeConfigurationImpl(Collections.unmodifiableMap(namespaceActionConfigs),
                 Collections.unmodifiableMap(namespaceConfigs), matcher);
     }
@@ -389,27 +398,29 @@ public class DefaultConfiguration implements Configuration {
      *
      */
 
-    // 构建完整的运行时action配置
+    // 源码解析: 构建完整的运行时action配置
     private ActionConfig buildFullActionConfig(PackageConfig packageContext, ActionConfig baseConfig) throws ConfigurationException {
         Map<String, String> params = new TreeMap<>(baseConfig.getParams());
         Map<String, ResultConfig> results = new TreeMap<>();
 
-        // 添加全局result
+        // 源码解析: 添加全局result
         if (!baseConfig.getPackageName().equals(packageContext.getName()) && packageContexts.containsKey(baseConfig.getPackageName())) {
             results.putAll(packageContexts.get(baseConfig.getPackageName()).getAllGlobalResults());
         } else {
             results.putAll(packageContext.getAllGlobalResults());
         }
 
-        // 添加action配置的result
+        // 源码解析: 添加action配置的result
        	results.putAll(baseConfig.getResults());
 
-        // Result为空, 设置默认值
+        // 源码解析: Result为空, 设置默认值
         setDefaultResults(results, packageContext);
 
+        // 源码解析: action配置的拦截器
         List<InterceptorMapping> interceptors = new ArrayList<>(baseConfig.getInterceptors());
 
         if (interceptors.size() <= 0) {
+            // 源码解析: 未配置action拦截器, 使用包下的默认过滤器
             String defaultInterceptorRefName = packageContext.getFullDefaultInterceptorRef();
 
             if (defaultInterceptorRefName != null) {

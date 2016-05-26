@@ -96,7 +96,7 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
                 // 源码解析: Dispatcher初始化后clean, 清除ThreadLocal中的容器
                 dispatcher.cleanUpAfterInit();
             }
-            // 源码解析: ThreadLocal的ActionContext清除
+            // 源码解析: 清除ThreadLocal的ActionContext
             init.cleanup();
         }
     }
@@ -131,9 +131,10 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
                 // 源码解析: 进入Struts2的执行流程
 
                 /**
-                 * 源码解析: 检查是否静态资源请求, 请求以/struts/或/static/开头, 静态资源在classpath以下目录
+                 * 源码解析: 检查是否静态资源请求, 请求以/struts/或/static/开头, 静态资源在classpath目录下
                  *
                  * 默认开启静态资源拦截, 可设置struts.serve.static=false禁用
+                 * 可以在核心过滤器的初始化参数中添加packages配置, 添加额外的静态资源目录, 默认为以下四个目录
                  *
                  * static/
                  * template/
@@ -156,7 +157,7 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
                     // 源码解析: 创建action上下文
                     prepare.createActionContext(request, response);
 
-                    // 源码解析: 分配Dispatcher到Dispatcher ThreadLocal
+                    // 源码解析: Dispatcher实例添加到ThreadLocal
                     prepare.assignDispatcherToThread();
 
                     // 源码解析: 封装请求Request
@@ -167,17 +168,23 @@ public class StrutsPrepareAndExecuteFilter implements StrutsStatics, Filter {
                     if (mapping == null) {
                         LOG.trace("Cannot find mapping for {}, passing to other filters", uri);
 
-                        // 源码解析: action映射不存在, 调用下一个过滤链
+                        // 源码解析: action映射不存在, 请求传递给下一个过滤链
                         chain.doFilter(request, response);
                     } else {
                         LOG.trace("Found mapping {} for {}", mapping, uri);
 
-                        // 源码解析: 执行action
+                        // 源码解析: 执行action, action执行入口
                         execute.executeAction(request, response, mapping);
                     }
                 }
             }
         } finally {
+            /**
+             * 源码解析: 请求处理完成后的清理工作
+             *
+             * 清除ThreadLocal中的容器, action上下文, Dispatcher
+             * 上传的临时文件清除
+             */
             prepare.cleanupRequest(request);
         }
     }

@@ -11,7 +11,9 @@ public class LoadConfigAction extends ActionSupport {
 
     @Action(value = "loadConfig",
             results = {@Result(name = "success", location = "/index.jsp")},
-            interceptorRefs = {@InterceptorRef(value = "actionScope")},
+            interceptorRefs = {
+                    @InterceptorRef(value = "defaultStack"),
+                    @InterceptorRef(value = "actionScope")},
             exceptionMappings = {@ExceptionMapping(result = "exception", exception = "test.struts2.exception.InterceptorException")})
     public String loadConfig() {
         return "success";

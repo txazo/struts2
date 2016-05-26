@@ -609,7 +609,7 @@ public class Dispatcher {
             String name = mapping.getName();
             String method = mapping.getMethod();
 
-            // 源码解析: 创建指定namespace和name的Action代理, 并完全初始化, 且包含一个ActionInvocation
+            // 源码解析: 创建指定namespace和name的Action代理, 并完全初始化
             ActionProxy proxy = getContainer().getInstance(ActionProxyFactory.class).createActionProxy(
                     namespace, name, method, extraContext, true, false);
 
@@ -673,7 +673,7 @@ public class Dispatcher {
      */
 
     /**
-     * 源码解析: 创建ContextMap, 包含所有包装的请求对象
+     * 源码解析: 创建上下文对象, 包含所有包装的请求对象
      *
      * com.opensymphony.xwork2.ActionContext.parameters
      * com.opensymphony.xwork2.ActionContext.session
@@ -876,7 +876,7 @@ public class Dispatcher {
 
         String content_type = request.getContentType();
 
-        // 源码解析: 请求得ContentType为multipart/form-data类型, 用MultiPartRequestWrapper封装, 否则用StrutsRequestWrapper封装
+        // 源码解析: 请求的ContentType为multipart/form-data类型, 用MultiPartRequestWrapper封装, 否则用StrutsRequestWrapper封装
         if (content_type != null && content_type.contains("multipart/form-data")) {
             MultiPartRequest mpr = getMultiPartRequest();
             LocaleProvider provider = getContainer().getInstance(LocaleProvider.class);

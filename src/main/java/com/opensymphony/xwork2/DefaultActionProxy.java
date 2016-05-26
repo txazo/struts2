@@ -149,6 +149,8 @@ public class DefaultActionProxy implements ActionProxy, Serializable {
     }
 
     public String execute() throws Exception {
+        // 源码解析: action真正执行的地方, 通过ActionInvocation实现
+
         ActionContext nestedContext = ActionContext.getContext();
         ActionContext.setContext(invocation.getInvocationContext());
 
@@ -158,6 +160,7 @@ public class DefaultActionProxy implements ActionProxy, Serializable {
         try {
             UtilTimerStack.push(profileKey);
 
+            // 源码解析: 执行action, 返回result
             retCode = invocation.invoke();
         } finally {
             if (cleanupContext) {
@@ -191,7 +194,7 @@ public class DefaultActionProxy implements ActionProxy, Serializable {
         try {
             UtilTimerStack.push(profileKey);
 
-            // 源码解析: 查找ActionConfig
+            // 源码解析: 查找action配置
             config = configuration.getRuntimeConfiguration().getActionConfig(namespace, actionName);
 
             if (config == null && unknownHandlerManager.hasUnknownHandlers()) {
@@ -201,6 +204,7 @@ public class DefaultActionProxy implements ActionProxy, Serializable {
                 throw new ConfigurationException(getErrorMessage());
             }
 
+            // 源码解析: 解析action的方法名
             resolveMethod();
 
             if (config.isAllowedMethod(method)) {

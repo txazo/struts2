@@ -239,6 +239,7 @@ public class DefaultActionInvocation implements ActionInvocation {
                 throw new IllegalStateException("Action has already executed");
             }
 
+            // 源码解析: 先执行拦截器链, 责任链模式
             if (interceptors.hasNext()) {
                 final InterceptorMapping interceptor = interceptors.next();
                 String interceptorMsg = "interceptor: " + interceptor.getName();
@@ -250,7 +251,7 @@ public class DefaultActionInvocation implements ActionInvocation {
                     UtilTimerStack.pop(interceptorMsg);
                 }
             } else {
-                // 源码解析: 调用Action
+                // 源码解析: 执行action
                 resultCode = invokeActionOnly();
             }
 
@@ -275,7 +276,10 @@ public class DefaultActionInvocation implements ActionInvocation {
                 }
 
                 // now execute the result, if we're supposed to
+                // 源码解析: 是否有执行后的result
                 if (proxy.getExecuteResult()) {
+
+                    // 源码解析: 执行result
                     executeResult();
                 }
 
@@ -299,7 +303,7 @@ public class DefaultActionInvocation implements ActionInvocation {
         try {
             UtilTimerStack.push(timerKey);
 
-            // 源码解析: 创建Action实例
+            // 源码解析: 创建Action实例, 并注入依赖
             action = objectFactory.buildAction(proxy.getActionName(), proxy.getNamespace(), proxy.getConfig(), contextMap);
         } catch (InstantiationException e) {
             throw new XWorkException("Unable to instantiate Action!", e, proxy.getConfig());
@@ -368,12 +372,14 @@ public class DefaultActionInvocation implements ActionInvocation {
      * @throws ConfigurationException If not result can be found with the returned code
      */
     private void executeResult() throws Exception {
+        // 源码解析: 创建结果试图
         result = createResult();
 
         String timerKey = "executeResult: " + getResultCode();
         try {
             UtilTimerStack.push(timerKey);
             if (result != null) {
+                // 源码解析: 执行结果试图
                 result.execute(this);
             } else if (resultCode != null && !Action.NONE.equals(resultCode)) {
                 throw new ConfigurationException("No result defined for action " + getAction().getClass().getName()
@@ -400,7 +406,7 @@ public class DefaultActionInvocation implements ActionInvocation {
             actionContext.setActionInvocation(this);
         }
 
-        // 源码解析: 创建Action实例
+        // 源码解析: 创建action实例
         createAction(contextMap);
 
         if (pushAction) {
@@ -411,7 +417,7 @@ public class DefaultActionInvocation implements ActionInvocation {
         invocationContext = new ActionContext(contextMap);
         invocationContext.setName(proxy.getActionName());
 
-        // 源码解析: 创建过滤器
+        // 源码解析: 创建拦截器链
         createInterceptors(proxy);
     }
 
@@ -432,6 +438,7 @@ public class DefaultActionInvocation implements ActionInvocation {
 
             Object methodResult;
             try {
+                // 源码解析: 执行action, 通过OGNL实现
                 methodResult = ognlUtil.getValue(methodName + "()", getStack().getContext(), action);
             } catch (MethodFailedException e) {
                 // if reason is missing method,  try checking UnknownHandlers
@@ -457,7 +464,7 @@ public class DefaultActionInvocation implements ActionInvocation {
                 }
             }
 
-            // 源码解析: 保存Action执行结果
+            // 源码解析: 保存action执行结果
             return saveResult(actionConfig, methodResult);
         } catch (NoSuchPropertyException e) {
             throw new IllegalArgumentException("The " + methodName + "() is not defined in action " + getAction().getClass() + "");

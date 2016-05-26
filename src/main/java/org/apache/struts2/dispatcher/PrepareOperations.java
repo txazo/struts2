@@ -83,8 +83,9 @@ public class PrepareOperations {
             // detected existing context, so we are probably in a forward
             ctx = new ActionContext(new HashMap<>(oldContext.getContextMap()));
         } else {
-            // 源码解析: 创建Ognl值栈
+            // 源码解析: 创建值栈
             ValueStack stack = dispatcher.getContainer().getInstance(ValueStackFactory.class).createValueStack();
+            // 源码解析: 创建上下文对象
             stack.getContext().putAll(dispatcher.createContextMap(request, response, null));
             ctx = new ActionContext(stack.getContext());
         }
@@ -148,6 +149,8 @@ public class PrepareOperations {
         try {
             // Wrap request first, just in case it is multipart/form-data
             // parameters might not be accessible through before encoding (ww-1278)
+
+            // 源码解析: 封装请求HttpServletRequest
             request = dispatcher.wrapRequest(request);
 
             // 源码解析: 重置ActionContext中的com.opensymphony.xwork2.dispatcher.HttpServletRequest的值
@@ -188,7 +191,7 @@ public class PrepareOperations {
         ActionMapping mapping = (ActionMapping) request.getAttribute(STRUTS_ACTION_MAPPING_KEY);
         if (mapping == null || forceLookup) {
             try {
-                // 源码解析: 创建ActionMapping实例
+                // 源码解析: 创建action映射
                 mapping = dispatcher.getContainer().getInstance(ActionMapper.class).getMapping(request, dispatcher.getConfigurationManager());
                 if (mapping != null) {
                     request.setAttribute(STRUTS_ACTION_MAPPING_KEY, mapping);
