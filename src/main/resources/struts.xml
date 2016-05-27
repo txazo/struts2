@@ -7,6 +7,9 @@
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.i18n.encoding" value="UTF-8"/>
 
+    <!-- result根路径 -->
+    <constant name="struts.convention.result.path" value="/WEB-INF/pages/"/>
+
     <!-- 静态资源拦截开关 -->
     <constant name="struts.serve.static" value="false"/>
 
@@ -16,6 +19,7 @@
     <!-- 包配置 -->
     <package name="test" extends="struts-default">
         <interceptors>
+            <interceptor name="result" class="test.struts2.interceptor.ResultInterceptor"/>
             <interceptor name="actionScope" class="test.struts2.interceptor.ActionScopeInterceptor"/>
         </interceptors>
     </package>
