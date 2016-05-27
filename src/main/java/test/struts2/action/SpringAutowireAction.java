@@ -10,8 +10,6 @@ import test.struts2.service.AutowireService;
 
 /**
  * Spring的@Autowired自动注入
- * <p/>
- * struts2-spring-plugin插件struts-plugin.xml
  *
  * @see com.opensymphony.xwork2.spring.SpringObjectFactory
  */
