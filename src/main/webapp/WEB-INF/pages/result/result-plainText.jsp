@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <title>Struts2 Result</title>
+    <title>Struts2 Result PlainText</title>
 </head>
 <body>
 <h1>plainText</h1>

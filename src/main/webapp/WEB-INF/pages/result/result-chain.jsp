@@ -7,5 +7,6 @@
 </head>
 <body>
 <h1>${resultType}</h1>
+<p>name: ${name}</p>
 </body>
 </html>

@@ -3,7 +3,7 @@
 
     <xsl:output method="xml"/>
 
-    <xsl:template match="/user">
+    <xsl:template match="/">
         <xsl:value-of select="name"/>
     </xsl:template>
 

@@ -4,7 +4,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.*;
 
-import javax.annotation.Resources;
 import java.io.InputStream;
 
 @ParentPackage("test")
@@ -16,7 +15,11 @@ public class ResultAction extends ActionSupport {
 
     private static final long serialVersionUID = 7800644785992711779L;
 
+    private String name;
+
     /**
+     * 请求传递给另一个action, 保留请求参数和值栈
+     *
      * @see com.opensymphony.xwork2.ActionChainResult
      */
     @Action(value = "chain", results = {
@@ -33,6 +36,8 @@ public class ResultAction extends ActionSupport {
     }
 
     /**
+     * 默认结果类型
+     *
      * @see org.apache.struts2.result.ServletDispatcherResult
      */
     @Action(value = "dispatcher", results = {
@@ -42,6 +47,8 @@ public class ResultAction extends ActionSupport {
     }
 
     /**
+     * FreeMarker视图渲染
+     *
      * @see org.apache.struts2.views.freemarker.FreemarkerResult
      */
     @Action(value = "freemarker", results = {
@@ -51,6 +58,8 @@ public class ResultAction extends ActionSupport {
     }
 
     /**
+     * 返回Http响应头
+     *
      * @see org.apache.struts2.result.HttpHeaderResult
      */
     @Action(value = "httpheader", results = {
@@ -60,6 +69,8 @@ public class ResultAction extends ActionSupport {
     }
 
     /**
+     * 重定向到新的url, 请求参数和值栈丢失
+     *
      * @see org.apache.struts2.result.ServletRedirectResult
      */
     @Action(value = "redirect", results = {
@@ -69,6 +80,8 @@ public class ResultAction extends ActionSupport {
     }
 
     /**
+     * 重定向到新的action, 请求参数和值栈丢失
+     *
      * @see org.apache.struts2.result.ServletActionRedirectResult
      */
     @Action(value = "redirectAction", results = {
@@ -84,6 +97,8 @@ public class ResultAction extends ActionSupport {
     }
 
     /**
+     * 返回流, 用于下载文件
+     *
      * @see org.apache.struts2.result.StreamResult
      */
     @Action(value = "stream", results = {
@@ -91,8 +106,7 @@ public class ResultAction extends ActionSupport {
                     "inputName", "imageStream",
                     "contentType", "image/jpeg",
                     "contentDisposition", "attachment;filename=result-stream.jpg",
-                    "bufferSize", "1024"
-            })})
+                    "bufferSize", "1024"})})
     public String stream() {
         return SUCCESS;
     }
@@ -102,6 +116,8 @@ public class ResultAction extends ActionSupport {
     }
 
     /**
+     * Velocity视图渲染
+     *
      * @see org.apache.struts2.result.VelocityResult
      */
     @Action(value = "velocity", results = {
@@ -114,18 +130,28 @@ public class ResultAction extends ActionSupport {
      * @see org.apache.struts2.views.xslt.XSLTResult
      */
     @Action(value = "xslt", results = {
-            @Result(name = SUCCESS, type = "xslt", location = "WEB-INF/pages/result/result-xslt.xsl")})
+            @Result(name = SUCCESS, type = "xslt", location = "WEB-INF/pages/result/result-xslt.xsl", params = {"exposedValue", "name"})})
     public String xslt() {
         return SUCCESS;
     }
 
     /**
+     * 返回普通文本
+     *
      * @see org.apache.struts2.result.PlainTextResult
      */
     @Action(value = "plainText", results = {
             @Result(name = SUCCESS, type = "plainText", location = "WEB-INF/pages/result/result-plainText.jsp", params = {"charSet", "UTF-8"})})
     public String plainText() {
         return SUCCESS;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
