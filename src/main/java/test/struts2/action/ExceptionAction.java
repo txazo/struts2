@@ -3,9 +3,14 @@ package test.struts2.action;
 import org.apache.struts2.convention.annotation.*;
 import test.struts2.exception.InterceptorException;
 
+/**
+ * Action异常处理
+ *
+ * @see com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor
+ */
 @ParentPackage("struts-default")
 @Namespace("/")
-public class ExceptionMappingInterceptorAction {
+public class ExceptionAction {
 
     @Action(value = "exception",
             results = {

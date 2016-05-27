@@ -6,6 +6,11 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+/**
+ * 参数注入
+ *
+ * @see com.opensymphony.xwork2.interceptor.ParametersInterceptor
+ */
 @ParentPackage("struts-default")
 @Namespace("/")
 public class ParameterAction extends ActionSupport {
