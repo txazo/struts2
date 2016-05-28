@@ -26,7 +26,14 @@ import java.util.Map;
  * @author crazybob@google.com (Bob Lee)
  */
 
-// 源码解析: 内部上下文, 用来协调注入和主持循环依赖
+/**
+ * 源码解析: 内部上下文, 用来协调注入和主持循环依赖
+ *
+ * 1) 容器
+ * 2)
+ * 3) 当前线程的作用域策略
+ * 4) 上下文
+ */
 class InternalContext {
 
   // 容器

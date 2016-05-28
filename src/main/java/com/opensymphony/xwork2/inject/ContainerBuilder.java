@@ -42,12 +42,16 @@ import java.util.logging.Logger;
 // 源码解析: 容器构建器
 public final class ContainerBuilder {
 
+    // 源码解析: 依赖key和内部工厂的map映射
     final Map<Key<?>, InternalFactory<?>> factories = new HashMap<>();
+    // 源码解析: 单例的内部工厂
     final List<InternalFactory<?>> singletonFactories = new ArrayList<>();
+    // 源码解析: 静态注入类列表
     final List<Class<?>> staticInjections = new ArrayList<>();
     boolean created;
     boolean allowDuplicates = false;
 
+    // 源码解析: 内部容器工厂, 返回内部上下文的容器
     private static final InternalFactory<Container> CONTAINER_FACTORY =
             new InternalFactory<Container>() {
                 public Container create(InternalContext context) {
@@ -55,6 +59,7 @@ public final class ContainerBuilder {
                 }
             };
 
+    // 源码解析: 内部JDK日志工厂
     private static final InternalFactory<Logger> LOGGER_FACTORY =
             new InternalFactory<Logger>() {
                 public Logger create(InternalContext context) {
@@ -67,11 +72,17 @@ public final class ContainerBuilder {
     /**
      * Constructs a new builder.
      */
+
+    // 源码解析: 实例化
     public ContainerBuilder() {
         // In the current container as the default Container implementation.
+
+        // 源码解析: 注册容器的工厂
         factories.put(Key.newInstance(Container.class, Container.DEFAULT_NAME), CONTAINER_FACTORY);
 
         // Inject the logger for the injected member's declaring class.
+
+        // 源码解析: 注册JDK日志Logger的工厂
         factories.put(Key.newInstance(Logger.class, Container.DEFAULT_NAME), LOGGER_FACTORY);
     }
 
@@ -83,9 +94,14 @@ public final class ContainerBuilder {
                                          InternalFactory<? extends T> factory, Scope scope) {
         ensureNotCreated();
         checkKey(key);
+
+        // 源码解析: 获取作用域工厂
         final InternalFactory<? extends T> scopedFactory = scope.scopeFactory(key.getType(), key.getName(), factory);
+
+        // 源码解析: 注册工厂
         factories.put(key, scopedFactory);
         if (scope == Scope.SINGLETON) {
+            // 源码解析: 单例工厂的特殊处理
             singletonFactories.add(new InternalFactory<T>() {
                 public T create(InternalContext context) {
                     try {

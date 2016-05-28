@@ -24,7 +24,14 @@ import java.lang.reflect.Member;
  * @author crazybob@google.com (Bob Lee)
  */
 
-// 源码解析: 注入上下文
+/**
+ * 源码解析: 注入上下文
+ *
+ * 1) 容器对象
+ * 2) 注入对象的key(name和type)
+ * 3) 注入目标(Constructor、Method、Field)
+ * 4) 当前线程的作用域策略
+ */
 public interface Context {
 
   /**
